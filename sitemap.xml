@@ -25,6 +25,9 @@
   <url><loc>https://lamgul.github.io/writing/killing-repetitive-work.html</loc><priority>0.6</priority></url>
   <url><loc>https://lamgul.github.io/writing/web-server-hardening.html</loc><priority>0.6</priority></url>
   <url><loc>https://lamgul.github.io/writing/feature-engineering-in-practice.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lamgul.github.io/writing/docker-image-diet.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lamgul.github.io/writing/redis-cache-invalidation.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lamgul.github.io/writing/observability-basics.html</loc><priority>0.6</priority></url>
   <url><loc>https://lamgul.github.io/projects/type-playground/</loc><priority>0.6</priority></url>
   <url><loc>https://lamgul.github.io/projects/livepoll/</loc><priority>0.6</priority></url>
   <url><loc>https://lamgul.github.io/projects/rail/</loc><priority>0.6</priority></url>

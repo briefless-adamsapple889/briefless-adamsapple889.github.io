@@ -40,7 +40,7 @@
 
 <main id="main">
   <section class="writing-hero wrap">
-    <p class="eyebrow">Tech Blog · 총 12편</p>
+    <p class="eyebrow">Tech Blog · 총 15편</p>
     <h1>실무에서 배운 것을<br>구체적으로 남깁니다</h1>
     <p>코드를 짜다 "왜 이렇게 했지"를 스스로 설명해야 하는 순간, 그 설명을 글로 붙잡아 둡니다. LLM 서빙부터 JVM 힙덤프, 쿼리 튜닝, 보안까지 — 대부분 <a class="u-link" href="../cases/">실무 사례</a>의 뒷이야기이자 how-to입니다.</p>
   </section>
@@ -81,6 +81,12 @@
           <div class="w-body"><h2>PostgreSQL 느린 목록 화면 — 인덱스와 keyset 페이지네이션</h2>
             <p>EXPLAIN ANALYZE로 병목을 읽고, 복합 인덱스 순서와 OFFSET→keyset 전환으로 어느 깊이든 일정하게.</p></div>
           <span class="w-tag">PostgreSQL · 성능</span>
+        </a>
+        <a class="w-item" data-tag="아키텍처" href="docker-image-diet.html">
+          <span class="w-date">2025 · 10<span class="w-read">약 6분</span></span>
+          <div class="w-body"><h2>Docker 이미지를 반으로 — 멀티스테이지와 레이어 캐시</h2>
+            <p>빌드 도구까지 담긴 무거운 이미지를 런타임만 남기고, 레이어 캐시 순서로 재빌드를 몇 초로.</p></div>
+          <span class="w-tag">Docker · 인프라</span>
         </a>
         <a class="w-item" data-tag="트러블슈팅" href="reading-heap-dumps.html">
           <span class="w-date">2025 · 09<span class="w-read">약 8분</span></span>
@@ -134,11 +140,23 @@
             <p>버전 노출 제거, 보안 헤더 세트, 표면 줄이기 — 운영을 깨지 않으면서 하나씩 닫는 법.</p></div>
           <span class="w-tag">Apache · Nginx</span>
         </a>
+        <a class="w-item" data-tag="백엔드" href="redis-cache-invalidation.html">
+          <span class="w-date">2024 · 09<span class="w-read">약 7분</span></span>
+          <div class="w-body"><h2>Redis로 목록을 캐싱할 때 진짜 어려운 건 무효화</h2>
+            <p>cache-aside는 쉽다. 어려운 건 언제 버리느냐 — TTL, 스탬피드, 이벤트 기반 무효화.</p></div>
+          <span class="w-tag">Redis · 캐시</span>
+        </a>
         <a class="w-item" data-tag="데이터" href="feature-engineering-in-practice.html">
           <span class="w-date">2024 · 06<span class="w-read">약 7분</span></span>
           <div class="w-body"><h2>Feature Engineering 실전 — 불쾌지수가 강수량을 이긴 이유</h2>
             <p>다중공선성(VIF)을 정리하고 도메인 지식으로 파생 변수를. 모델보다 데이터가 순위를 만든다.</p></div>
           <span class="w-tag">EDA · ML</span>
+        </a>
+        <a class="w-item" data-tag="트러블슈팅" href="observability-basics.html">
+          <span class="w-date">2024 · 03<span class="w-read">약 6분</span></span>
+          <div class="w-body"><h2>관측 가능성 — 새벽에 안 깨려면 무엇을 남겨야 하나</h2>
+            <p>로그·메트릭·트레이스 세 기둥, 구조화 로깅과 상관 ID로 디버깅 시간을 줄이는 법.</p></div>
+          <span class="w-tag">로그 · APM</span>
         </a>
       </div>
     </div>
