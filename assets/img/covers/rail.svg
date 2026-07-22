@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-label="Regex Rail cover">
+  <rect width="400" height="300" fill="#1b1915"/>
+  <g fill="none" stroke="#4a443a" stroke-width="2.5">
+    <path d="M30 150 H100"/>
+    <path d="M100 150 q20 0 20 -34 v-10 q0 -20 20 -20 h40 q20 0 20 20 v10 q0 34 20 34"/>
+    <path d="M100 150 q20 0 20 34 v10 q0 20 20 20 h40 q20 0 20 -20 v-10 q0 -34 20 -34"/>
+    <path d="M240 150 H300"/>
+    <path d="M300 150 h30 q20 0 20 20 v0 q0 20 -20 20 h-10"/>
+    <path d="M300 150 H370"/>
+  </g>
+  <g>
+    <rect x="140" y="72"  width="60" height="30" rx="15" fill="#1b1915" stroke="#db4322" stroke-width="2.5"/>
+    <rect x="140" y="198" width="60" height="30" rx="6"  fill="#1b1915" stroke="#f1ece2" stroke-width="2.5"/>
+  </g>
+  <g font-family="ui-monospace, monospace" font-size="14" fill="#f1ece2" text-anchor="middle">
+    <text x="170" y="92">\w+</text>
+    <text x="170" y="218" fill="#db4322">[0-9]</text>
+  </g>
+  <circle cx="30" cy="150" r="6" fill="#4ec6a7"/>
+  <circle cx="370" cy="150" r="6" fill="#db4322"/>
+  <text x="30" y="285" font-family="ui-monospace, monospace" fill="#857c6c" font-size="11">/^(\w+|[0-9])+$/</text>
+</svg>
