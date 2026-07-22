@@ -1,0 +1,60 @@
+/* viz.css — commit rhythm data story */
+
+.cr-note {
+  font-family: var(--mono); font-size: var(--t--1); color: var(--ink-3);
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 0.7rem 1rem; margin-bottom: var(--sp-5);
+  display: flex; gap: 0.6rem;
+}
+.cr-note::before { content: "ℹ"; color: var(--accent); }
+
+/* stat tiles */
+.cr-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1px; background: var(--line);
+  border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden;
+  margin-bottom: var(--sp-6);
+}
+.cr-tile { background: var(--bg-elev); padding: var(--sp-4); }
+.cr-tile b { font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 1rem + 2vw, 2.3rem); line-height: 1; display: block; letter-spacing: -0.02em; }
+.cr-tile .lab { display: block; margin-top: 0.5rem; font-size: var(--t-0); color: var(--ink); font-weight: 500; }
+.cr-tile .sub { display: block; font-family: var(--mono); font-size: 0.68rem; color: var(--ink-3); margin-top: 0.2rem; }
+
+/* chart card */
+.cr-card {
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  background: var(--bg-elev); padding: var(--sp-5); margin-bottom: var(--sp-5);
+}
+.cr-card h3 { font-family: var(--serif); font-weight: 420; font-size: var(--t-2); letter-spacing: -0.015em; }
+.cr-card .desc { color: var(--ink-2); margin: 0.5rem 0 var(--sp-4); max-width: 60ch; font-size: var(--t-0); }
+.cr-card .desc b { color: var(--ink); }
+.cr-scroll { overflow-x: auto; }
+.cr-svg { display: block; max-width: 100%; }
+.cr-hint { color: var(--ink-3); font-family: var(--mono); }
+
+/* svg element classes */
+.cr-axis { fill: var(--ink-3); font-family: var(--mono); font-size: 10px; }
+.cr-axis.mid { text-anchor: middle; }
+.cr-axis.end { text-anchor: end; }
+.cr-grid { stroke: var(--line); stroke-width: 1; }
+.cr-dot { fill: var(--accent); }
+.cr-mbar { stroke: var(--bg-elev); stroke-width: 0.5; }
+.cr-arc { stroke: var(--bg-elev); stroke-width: 1.5; }
+.cr-donut-num { font-family: var(--serif); font-weight: 500; font-size: 26px; fill: var(--ink); }
+.cr-donut-lab { font-family: var(--mono); font-size: 10px; fill: var(--ink-3); }
+
+/* calendar */
+.cal-cell { fill: var(--accent); }
+.cal-cell.empty { fill: var(--surface); }
+.cr-scale { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 0.7rem; color: var(--ink-3); margin-top: 0.8rem; justify-content: flex-end; }
+.cr-scale .sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+/* donut + legend layout */
+.cr-lang { display: grid; grid-template-columns: 240px 1fr; gap: var(--sp-5); align-items: center; }
+@media (max-width: 620px) { .cr-lang { grid-template-columns: 1fr; } }
+.cr-legend { display: grid; gap: 0.5rem; }
+.cr-leg-row { display: grid; grid-template-columns: auto 1fr auto; gap: 0.7rem; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid var(--line); }
+.cr-leg-row:last-child { border-bottom: 0; }
+.cr-leg-row .sw { width: 12px; height: 12px; border-radius: 3px; }
+.cr-leg-row .nm { color: var(--ink); }
+.cr-leg-row .pc { font-family: var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
