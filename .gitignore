@@ -8,6 +8,10 @@ dist/
 build/
 .cache/
 
+# ...except Rail ships its compiled TS output (GitHub Pages serves it)
+!projects/rail/dist/
+!projects/rail/dist/**
+
 # env / secrets
 .env
 .env.*

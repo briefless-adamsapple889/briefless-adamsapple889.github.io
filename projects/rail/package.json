@@ -1,0 +1,15 @@
+{
+  "name": "rail",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "정규식을 파싱해 철도 다이어그램으로 그리는 시각화 도구. 손으로 짠 파서.",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3"
+  }
+}
