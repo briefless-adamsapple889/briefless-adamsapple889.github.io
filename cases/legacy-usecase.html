@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>입사 첫날 본 코드, 6개월 뒤 고친 이유 — 안성진</title>
+<meta name="description" content="2008년 주차 시스템 기반의 하드코딩·계층 없는 레거시. 신입이 첫날 지적하는 대신 6개월간 신뢰를 쌓은 뒤 UseCase 중심 구조를 제안해 점진적으로 리팩토링한 기록.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="입사 첫날 본 코드, 6개월 뒤 고친 이유">
+<meta property="og:description" content="좋은 설계도 신뢰가 없으면 실행되지 않는다.">
+<meta property="og:image" content="https://lamgul.github.io/assets/img/og.png">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/project.css">
+<link rel="stylesheet" href="../assets/css/case.css">
+<script>
+  (function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;else document.documentElement.removeAttribute("data-theme");}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#body">본문으로 건너뛰기</a>
+
+<header class="proj-header" data-header>
+  <div class="wrap header-inner">
+    <a class="back-link" href="index.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      <span class="brand-mini">사례 목록</span>
+    </a>
+    <div class="spacer"></div>
+    <span class="crumb">cases / legacy-usecase</span>
+    <button class="icon-btn theme-toggle" data-theme-toggle aria-label="테마 전환" style="margin-left:var(--sp-3)">
+      <svg class="moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="proj-hero wrap">
+    <p class="eyebrow">사례 · 대흥정보 · 2022</p>
+    <h1>입사 첫날 본 코드<span class="sub">6개월 뒤 고친 이유</span></h1>
+    <p class="tagline">첫 출근날 프로젝트 코드를 열자 당황했습니다. 2008년 주차 시스템 기반에 하드코딩, 도메인 계층 구분 없이 짜인 코드. 하지만 <b>신입이 첫날 "이거 틀렸어요"라고 말하는 건</b> 옳지 않다고 생각했습니다.</p>
+    <div class="proj-meta">
+      <div><span class="m-key">역할</span><span class="m-val">리팩토링 제안 · 주도</span></div>
+      <div><span class="m-key">스택</span><span class="m-val">Java · Spring · UseCase 패턴</span></div>
+      <div><span class="m-key">유형</span><span class="m-val">아키텍처 · 협업</span></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="metrics">
+      <div class="metric"><b>6개월</b><span class="lab">신뢰를 쌓은 뒤 제안</span><span class="sub">타이밍의 설계</span></div>
+      <div class="metric"><b>UseCase</b><span class="lab">독립 클래스로 분리</span><span class="sub">책임 명확화</span></div>
+      <div class="metric"><b>최소화</b><span class="lab">기능 추가 시 영향 범위</span><span class="sub">변경 격리</span></div>
+      <div class="metric"><b>2008</b><span class="lab">레거시 기반</span><span class="sub">점진적 개선</span></div>
+    </div>
+  </section>
+
+  <article class="wrap section" id="body">
+    <div class="prose">
+      <p class="lead">"트랜잭션 스크립트 패턴을 최대한 악용하면 이런 형태가 되지 않을까" 싶은 코드였습니다. 비즈니스 로직이 여기저기 흩어져 있고, 도메인 계층이 없어 무엇이 어디 책임인지 알 수 없었습니다. 고치고 싶었지만, <b>먼저 신뢰를 얻어야 했습니다.</b></p>
+
+<span class="star">배경</span>
+<h2>이미 겪어본 문제였다</h2>
+<p>이전에 Spring MVC를 쓰며 서비스의 확장과 컨트롤러 관리가 어려웠던 경험이 있었습니다. 그때 《엔터프라이즈 애플리케이션 아키텍처 패턴》에서 UseCase 패턴을 접했고, 이 패턴이 지금 프로젝트에도 맞겠다고 판단했습니다. 문제 진단은 빨랐습니다. 어려운 건 <em>그다음</em>이었습니다.</p>
+
+<span class="star">판단</span>
+<h2>옳은 말도 타이밍이 있다</h2>
+<p>신입 사원이 입사 직후 "코드가 잘못됐다"고 말하는 건 적절하지 않다고 봤습니다. 먼저 팀에 적응하고 맡은 업무를 성실히 수행하며 신뢰를 쌓는 게 우선이었습니다. 약 6개월간 묵묵히 일했습니다. 이건 미룬 게 아니라 <b>실행 가능성을 만드는 과정</b>이었습니다.</p>
+
+<span class="star">실행</span>
+<h2>회의에서, 사례로 설명하다</h2>
+<p>메인 모듈의 캡슐화 작업을 다루는 팀 회의에서 기회가 왔습니다. 현재 구조의 문제점을 설명하고, UseCase 패턴을 적용하면 어떻게 개선되는지 <b>구체적 사례를 들어</b> 설명했습니다. 일방적으로 주장하는 대신 왜 필요한지를 데이터와 사례로 풀었고, 팀원들이 동의해 주었습니다. 그리고 점진적으로 리팩토링을 시작했습니다.</p>
+<p>각 UseCase를 독립적인 클래스로 분리하고 비즈니스 로직을 명시적으로 캡슐화했습니다. 도메인 계층을 구분하니 책임 소재가 명확해졌고, 새 기능을 추가할 때 영향 범위가 최소화됐습니다.</p>
+
+<span class="star">결과</span>
+<h2>배운 건 패턴이 아니라 신뢰였다</h2>
+<blockquote>아무리 좋은 아이디어라도 팀의 신뢰 없이는 실행될 수 없다. 그리고 신뢰는 꾸준한 소통과 성실한 업무 수행으로 쌓인다.</blockquote>
+<p>팀원들이 제 제안에 동의해 준 건, 그동안 쌓은 신뢰가 있었기 때문이라고 생각합니다. 기술적으로 옳은 것과 조직에서 실행되는 것 사이의 거리를 좁히는 법 — 이 사례가 제게 가르쳐 준 가장 값진 교훈입니다.</p>
+    </div>
+  </article>
+
+  <nav class="proj-nav wrap" aria-label="사례 이동">
+    <a class="prev" href="incident-process.html"><div class="np-key">← 이전</div><div class="np-title">민원 200건을 30건으로</div></a>
+    <a class="next" href="server-hardening.html"><div class="np-key">다음 →</div><div class="np-title">서버 보안 하드닝</div></a>
+  </nav>
+</main>
+
+<footer class="site-footer wrap">
+  <div class="colophon"><span>© <span data-year>2025</span> 안성진</span><span><a href="../index.html">홈으로</a></span></div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

@@ -127,3 +127,30 @@
 .now-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--line); color: var(--ink-2); display: flex; gap: 0.8rem; }
 .now-list li:last-child { border-bottom: 0; }
 .now-list li span:first-child { color: var(--accent); font-family: var(--mono); font-size: var(--t--1); min-width: 5.5em; }
+
+/* ---- print: turn the about page into a clean one-look CV ---- */
+@media print {
+  :root {
+    --bg: #fff; --bg-elev: #fff; --surface: #fff;
+    --ink: #111; --ink-2: #333; --ink-3: #666;
+    --line: #d5d5d5; --line-2: #c4c4c4; --accent: #b83417;
+  }
+  .site-header, .site-footer .footer-cta, .skip,
+  .about-hero .chip, [data-theme-toggle], .marquee { display: none !important; }
+  body { font-size: 10.5pt; line-height: 1.4; }
+  .about-hero { padding-block: 0 0.6rem; }
+  .about-hero h1 { font-size: 22pt; }
+  .about-hero .lead { font-size: 11pt; margin-top: 0.5rem; }
+  .section { padding-block: 0.5rem; }
+  .hr { margin-block: 0.6rem; }
+  .grid-2 { grid-template-columns: 9rem 1fr; gap: 1rem; }
+  .side-label { position: static; }
+  .job, .principle, .skill-col { break-inside: avoid; page-break-inside: avoid; }
+  .job { padding-bottom: 0.7rem; }
+  .principles { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  a { color: #111; text-decoration: none; }
+  .u-link { background: none; }
+  .colophon { border: 0; color: #666; }
+  .site-footer { margin-top: 0.5rem; border: 0; }
+}
