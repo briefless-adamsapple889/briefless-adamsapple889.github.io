@@ -78,6 +78,29 @@ Minimal  Apache                            <span class="c"># 제품명만</span>
 <span class="k">Prod</span>     Apache                            <span class="c"># 제품명도 최소화 ← 채택</span></pre>
 <p>보안 감사 기준과 실무적 필요성을 함께 고려해 <code>ServerTokens Prod</code>를 적용했습니다. 이렇게 하면 Server 헤더에서 유의미한 정보가 사라집니다.</p>
 
+<figure class="viz reveal" style="background:var(--bg-elev)">
+  <div class="hdrcmp">
+    <div class="hdrcol bad">
+      <div class="hdrtag">BEFORE · curl -I</div>
+<pre>HTTP/1.1 200 OK
+<span class="risk">Server: Apache/2.4.6 (CentOS)</span>   ← 버전 노출
+<span class="risk">X-Powered-By: PHP/7.4.3</span>          ← 스택 노출
+<span class="dim">(보안 헤더 없음)</span>
+Content-Type: text/html</pre>
+    </div>
+    <div class="hdrcol good">
+      <div class="hdrtag">AFTER</div>
+<pre>HTTP/1.1 200 OK
+<span class="safe">Server: Apache</span>                    ✓ 최소화
+<span class="safe">Strict-Transport-Security:</span> max-age=63072000
+<span class="safe">X-Content-Type-Options:</span> nosniff
+<span class="safe">X-Frame-Options:</span> DENY
+Content-Type: text/html</pre>
+    </div>
+  </div>
+  <figcaption>같은 응답, 다른 노출. 공격자에게 줄 정보를 지우고 방어 헤더를 더한다.</figcaption>
+</figure>
+
 <span class="star">신중함</span>
 <h2>간단한 변경일수록 조심스럽게</h2>
 <p>설정 변경 자체는 한 줄이었지만, 저는 신중하게 접근했습니다. 혹시 이 헤더 정보를 참조하는 <b>모니터링 도구나 로드 밸런서</b>가 있을 수 있기 때문입니다. 개발 환경에서 먼저 테스트하고, 모니터링 시스템에 영향이 없는지 확인한 뒤 운영 환경에 반영했습니다. "간단한 변경"이라는 방심이 장애를 만든다는 걸 알고 있었으니까요.</p>

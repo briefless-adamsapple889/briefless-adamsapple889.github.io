@@ -76,6 +76,40 @@
 <p>메인 모듈의 캡슐화 작업을 다루는 팀 회의에서 기회가 왔습니다. 현재 구조의 문제점을 설명하고, UseCase 패턴을 적용하면 어떻게 개선되는지 <b>구체적 사례를 들어</b> 설명했습니다. 일방적으로 주장하는 대신 왜 필요한지를 데이터와 사례로 풀었고, 팀원들이 동의해 주었습니다. 그리고 점진적으로 리팩토링을 시작했습니다.</p>
 <p>각 UseCase를 독립적인 클래스로 분리하고 비즈니스 로직을 명시적으로 캡슐화했습니다. 도메인 계층을 구분하니 책임 소재가 명확해졌고, 새 기능을 추가할 때 영향 범위가 최소화됐습니다.</p>
 
+<figure class="viz reveal">
+  <svg viewBox="0 0 720 244" width="720" height="244" role="img" aria-label="레거시 구조 개선 전후">
+    <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="d-arrow"/></marker></defs>
+    <text class="d-gtext" x="16" y="20">BEFORE · 트랜잭션 스크립트</text>
+    <text class="d-gtext" x="404" y="20">AFTER · UseCase 중심</text>
+    <!-- before: one tangled box -->
+    <rect class="d-group" x="16" y="34" width="312" height="168" rx="10" style="stroke:var(--accent);opacity:.7"/>
+    <g class="v-fade">
+      <rect class="d-box" x="44" y="58" width="80" height="30" rx="6"/><text class="d-label" x="84" y="77" style="font-size:11px">주문</text>
+      <rect class="d-box" x="196" y="66" width="80" height="30" rx="6"/><text class="d-label" x="236" y="85" style="font-size:11px">정산</text>
+      <rect class="d-box" x="64" y="112" width="80" height="30" rx="6"/><text class="d-label" x="104" y="131" style="font-size:11px">검증</text>
+      <rect class="d-box" x="210" y="120" width="80" height="30" rx="6"/><text class="d-label" x="250" y="139" style="font-size:11px">알림</text>
+      <rect class="d-box" x="124" y="160" width="80" height="30" rx="6"/><text class="d-label" x="164" y="179" style="font-size:11px">로그</text>
+      <line class="v-x" x1="124" y1="73" x2="196" y2="81"/><line class="v-x" x1="104" y1="88" x2="236" y2="120"/><line class="v-x" x1="84" y1="88" x2="164" y2="160"/><line class="v-x" x1="250" y1="150" x2="164" y2="160"/>
+    </g>
+    <text class="v-tag accent" x="172" y="224" text-anchor="middle">책임 뒤섞임 · 도메인 계층 없음</text>
+    <!-- divider -->
+    <text class="v-txt mut" x="352" y="112" text-anchor="middle" style="font-size:11px">리팩토링</text>
+    <path class="d-rail" d="M334 124 H372" marker-end="url(#ar)"/>
+    <!-- after: layered -->
+    <g class="v-fade" style="animation-delay:.15s">
+      <rect class="d-box fill" x="392" y="40" width="312" height="30" rx="7"/><text class="d-label" x="548" y="59" style="font-size:11px">Controller · 요청 진입</text>
+      <rect class="d-box accent" x="392" y="92" width="98" height="40" rx="7"/><text class="d-label" x="441" y="116" style="font-size:11px">주문 UseCase</text>
+      <rect class="d-box accent" x="499" y="92" width="98" height="40" rx="7"/><text class="d-label" x="548" y="116" style="font-size:11px">정산 UseCase</text>
+      <rect class="d-box accent" x="606" y="92" width="98" height="40" rx="7"/><text class="d-label" x="655" y="116" style="font-size:11px">공지 UseCase</text>
+      <rect class="d-box teal" x="392" y="154" width="312" height="34" rx="7"/><text class="d-label" x="548" y="176" style="font-size:11px">Domain 계층 · Order · Settlement …</text>
+      <path class="d-rail" d="M441 70 V92" marker-end="url(#ar)"/><path class="d-rail" d="M548 70 V92" marker-end="url(#ar)"/><path class="d-rail" d="M655 70 V92" marker-end="url(#ar)"/>
+      <path class="d-rail" d="M441 132 V154" marker-end="url(#ar)"/><path class="d-rail" d="M548 132 V154" marker-end="url(#ar)"/><path class="d-rail" d="M655 132 V154" marker-end="url(#ar)"/>
+    </g>
+    <text class="v-tag" x="548" y="212" text-anchor="middle" style="fill:var(--teal)">책임 분리 · 변경 영향 최소화 ✓</text>
+  </svg>
+  <figcaption>비즈니스 로직이 뒤섞인 거대 메서드를, 각 UseCase 클래스와 도메인 계층으로 분리했다.</figcaption>
+</figure>
+
 <span class="star">결과</span>
 <h2>배운 건 패턴이 아니라 신뢰였다</h2>
 <blockquote>아무리 좋은 아이디어라도 팀의 신뢰 없이는 실행될 수 없다. 그리고 신뢰는 꾸준한 소통과 성실한 업무 수행으로 쌓인다.</blockquote>

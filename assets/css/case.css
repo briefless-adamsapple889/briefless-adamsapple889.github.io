@@ -103,3 +103,15 @@
 .v-empty { fill: var(--ink-3); font-family: var(--mono); font-size: 11px; }
 .v-rec { fill: var(--accent); }
 .v-cam { fill: var(--ink-3); font-family: var(--mono); font-size: 11px; }
+
+/* header before/after comparison */
+.hdrcmp { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+@media (max-width: 620px) { .hdrcmp { grid-template-columns: 1fr; } }
+.hdrcol { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg-elev); }
+.hdrtag { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.06em; padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--line); }
+.hdrcol.bad .hdrtag { color: var(--accent-press); background: var(--accent-tint); }
+.hdrcol.good .hdrtag { color: var(--teal); background: color-mix(in srgb, var(--teal) 12%, transparent); }
+.hdrcol pre { margin: 0; padding: 0.8rem; font-family: var(--mono); font-size: 0.74rem; line-height: 1.75; color: var(--ink-2); overflow-x: auto; white-space: pre; }
+.hdrcol pre .risk { color: var(--accent); }
+.hdrcol pre .safe { color: var(--teal); }
+.hdrcol pre .dim { color: var(--ink-3); }
