@@ -1,0 +1,98 @@
+/* rail.css — regex railroad tool + diagram styling */
+
+.rail-tool { display: flex; flex-direction: column; }
+
+/* input row */
+.rail-input {
+  display: flex; align-items: center; gap: 0;
+  padding: var(--sp-4);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+.rail-slash {
+  font-family: var(--mono); font-size: 1.25rem; color: var(--ink-3);
+  user-select: none; padding: 0 0.4rem;
+}
+#rx {
+  flex: 1; min-width: 0;
+  font-family: var(--mono); font-size: 1.1rem;
+  background: transparent; border: 0; outline: none; color: var(--ink);
+  padding: 0.4rem 0;
+}
+#rx::placeholder { color: var(--ink-3); }
+
+/* examples */
+.rail-examples {
+  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+  padding: 0.7rem var(--sp-4);
+  border-bottom: 1px solid var(--line);
+}
+.rail-examples .lbl { font-family: var(--mono); font-size: var(--t--1); color: var(--ink-3); margin-right: 0.2rem; }
+.rr-chip {
+  font-family: var(--mono); font-size: 0.72rem;
+  padding: 0.35em 0.7em; border-radius: 100px;
+  border: 1px solid var(--line-2); color: var(--ink-2); background: var(--bg-elev);
+  transition: all .18s;
+}
+.rr-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+/* stage */
+.rail-stage {
+  padding: clamp(1.2rem, 1rem + 2vw, 2.6rem) var(--sp-4);
+  overflow-x: auto;
+  background:
+    radial-gradient(100% 100% at 50% 0%, color-mix(in srgb, var(--accent) 4%, transparent), transparent 60%),
+    var(--bg-elev);
+  min-height: 220px;
+  display: flex; align-items: center; justify-content: safe center;
+}
+.rail-stage.dim { opacity: 0.4; }
+.rr-svg { display: block; margin: 0 auto; }
+.rr-hint { font-family: var(--mono); color: var(--ink-3); font-size: var(--t-0); }
+
+/* diagram elements */
+.rr-rail { fill: none; stroke: var(--ink-3); stroke-width: 1.7; }
+.rr-loop { stroke: var(--accent); opacity: 0.9; }
+.rr-arrow { fill: var(--accent); }
+.rr-node { fill: var(--accent); }
+
+.rr-box { fill: var(--bg-elev); stroke: var(--line-2); stroke-width: 1.6; }
+.rr-char   { stroke: var(--ink-3); }
+.rr-esc    { stroke: var(--teal); }
+.rr-class  { stroke: var(--accent); }
+.rr-anchor { fill: var(--surface); stroke: var(--line-2); }
+.rr-dot    { stroke: var(--ink-3); stroke-dasharray: 3 3; }
+.rr-empty  { stroke: var(--line-2); stroke-dasharray: 2 3; }
+
+.rr-tok { text-anchor: middle; font-family: var(--mono); font-weight: 600; font-size: 14px; fill: var(--ink); }
+.rr-sub { text-anchor: middle; font-family: var(--sans); font-weight: 400; font-size: 10px; fill: var(--ink-3); }
+
+.rr-group { fill: color-mix(in srgb, var(--accent) 4%, transparent); stroke: var(--line-2); stroke-dasharray: 5 4; stroke-width: 1.4; }
+.rr-g-cap  { stroke: color-mix(in srgb, var(--accent) 55%, var(--line-2)); }
+.rr-g-look { stroke: color-mix(in srgb, var(--teal) 55%, var(--line-2)); }
+.rr-cap { font-family: var(--mono); font-weight: 500; font-size: 10px; letter-spacing: 0.03em; fill: var(--ink-2); }
+.rr-count { text-anchor: middle; font-family: var(--mono); font-weight: 500; font-size: 11px; fill: var(--ink-2); }
+
+/* error */
+.rail-error {
+  padding: var(--sp-4);
+  border-top: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  background: var(--accent-tint);
+}
+.rr-err-msg { color: var(--accent-press); font-weight: 600; margin-bottom: 0.5rem; }
+.rr-err-ptr { font-family: var(--mono); font-size: 0.9rem; color: var(--ink-2); white-space: pre; overflow-x: auto; }
+.rr-err-ptr span { color: var(--accent); font-weight: 700; }
+
+/* legend */
+.rail-legend {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.1rem;
+  padding: 0.8rem var(--sp-4);
+  border-top: 1px solid var(--line);
+  font-family: var(--mono); font-size: var(--t--1); color: var(--ink-3);
+}
+.rail-legend span { display: inline-flex; align-items: center; gap: 0.4em; }
+.rail-legend i { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid; display: inline-block; }
+.lg-char { border-color: var(--ink-3); }
+.lg-esc { border-color: var(--teal); }
+.lg-class { border-color: var(--accent); }
+.lg-group { border-color: var(--accent); border-style: dashed; }
