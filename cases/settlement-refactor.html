@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="../assets/css/base.css">
 <link rel="stylesheet" href="../assets/css/project.css">
 <link rel="stylesheet" href="../assets/css/case.css">
+<link rel="stylesheet" href="../assets/css/demo.css">
 <script>
   (function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;else document.documentElement.removeAttribute("data-theme");}catch(e){}})();
 </script>
@@ -119,6 +120,23 @@
 <span class="star">결과</span>
 <h2>한 곳을 고치면 모두가 같아진다</h2>
 <p>리팩토링 후, 할인 정책을 바꿀 때 <b>한 곳만 수정하면 모든 결제 수단에 일관되게</b> 적용됐습니다. 금액 불일치 민원은 사라졌고, 새 결제 수단을 추가하는 시간도 절반으로 줄었습니다. 코드 라인 수는 약 40% 감소했지만, 오히려 더 명확하고 유지보수하기 쉬워졌습니다. 좋은 추상화는 코드를 줄이면서 동시에 더 읽히게 만든다는 걸 배운 사례입니다.</p>
+
+<div class="demo" id="demo-fare">
+  <div class="demo-head"><span class="dot"></span><span class="ttl">주차 요금 계산 · 리팩토링 전 / 후</span><span class="badge">같은 시간, 같은 요금?</span></div>
+  <div class="demo-body">
+    <div class="fc-toggle">
+      <button type="button" data-mode="before" class="active">BEFORE · 5곳 중복</button>
+      <button type="button" data-mode="after">AFTER · Template+Strategy</button>
+    </div>
+    <div class="fc-field">
+      <label>주차 시간 · <span class="fc-dur" data-dur>1시간 30분</span></label>
+      <input class="fc-range" type="range" min="30" max="480" step="30" value="90" data-range aria-label="주차 시간 조절">
+    </div>
+    <div class="fc-result" data-res></div>
+    <div class="fc-flag" data-flag></div>
+  </div>
+  <div class="demo-cap">결제 수단별 계산 결과. BEFORE에서는 할인 없는 수단끼리도 금액이 어긋납니다 — 슬라이더를 움직여 보세요 (계산 로직 시연).</div>
+</div>
     </div>
   </article>
 
@@ -133,5 +151,6 @@
 </footer>
 
 <script src="../assets/js/site.js" defer></script>
+<script src="../assets/js/demo.js" defer></script>
 </body>
 </html>

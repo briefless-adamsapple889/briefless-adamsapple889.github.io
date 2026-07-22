@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="../assets/css/base.css">
 <link rel="stylesheet" href="../assets/css/project.css">
 <link rel="stylesheet" href="../assets/css/case.css">
+<link rel="stylesheet" href="../assets/css/demo.css">
 <script>
   (function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;else document.documentElement.removeAttribute("data-theme");}catch(e){}})();
 </script>
@@ -131,6 +132,21 @@
         <figcaption>장애와 장애 사이 간격 — 길수록 좋다. 임시 조치가 아니라 근본 원인을 없앤 결과.</figcaption>
       </figure>
 
+      <div class="demo" id="demo-heap">
+        <div class="demo-head"><span class="dot"></span><span class="ttl">힙 사용률 — 누수 vs 근본 해결</span><span class="badge" data-gc>누수 있음</span></div>
+        <div class="demo-body">
+          <div class="hp-wrap"><canvas></canvas></div>
+          <div class="hp-bar">
+            <div class="hp-toggle">
+              <button type="button" data-mode="before" class="active">동기화 누락 (before)</button>
+              <button type="button" data-mode="after">synchronized (after)</button>
+            </div>
+            <span class="hp-stat">힙 <b data-use>30%</b></span>
+          </div>
+        </div>
+        <div class="demo-cap">점선은 GC 임계치. BEFORE는 GC가 다 회수하지 못해 서서히 차오르다 재기동하고, AFTER는 매번 기준선으로 복귀합니다.</div>
+      </div>
+
       <div class="callout"><span class="mark">*</span><p>제가 이 사례를 아끼는 이유는 화려한 기술 때문이 아닙니다. <b>증상(CPU 100%)을 원인으로 착각하지 않고, 임시 대응과 근본 해결을 구분해 끝까지 간 것.</b> 그리고 능력이 부족하면 퇴근 후에라도 배워서 채운 것. 이게 제가 문제를 대하는 방식입니다.</p></div>
 
       <p>이 경험은 지금도 습관으로 남아 있습니다. 막히면 코드를 노려보기 전에 "내가 지금 뭘 사실이라고 <em>가정</em>하고 있지?"부터 적어봅니다. 그때 CPU 100%를 원인이라 가정했다면, 저는 아직도 서버를 껐다 켜고 있었을 겁니다.</p>
@@ -148,5 +164,6 @@
 </footer>
 
 <script src="../assets/js/site.js" defer></script>
+<script src="../assets/js/demo.js" defer></script>
 </body>
 </html>

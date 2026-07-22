@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="../assets/css/base.css">
 <link rel="stylesheet" href="../assets/css/project.css">
 <link rel="stylesheet" href="../assets/css/case.css">
+<link rel="stylesheet" href="../assets/css/demo.css">
 <script>
   (function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;else document.documentElement.removeAttribute("data-theme");}catch(e){}})();
 </script>
@@ -124,6 +125,17 @@
       <p>현장에는 한국어가 익숙하지 않은 외국인 근로자가 많습니다. 안전공지가 안 읽히면 공지가 아닙니다. 그래서 <b>공지를 15개 언어로 자동 번역</b>하는 AI API를 붙였습니다. 번역은 Gemma, 음성 공지는 Whisper로 STT 처리합니다. 민감한 현장 데이터를 외부 API로 흘려보내지 않기 위해 <b>온프레미스 GPU 서버를 직접 구축</b>했고, <code>vLLM</code>과 양자화로 추론을 최적화해 현실적인 응답 속도를 확보했습니다.</p>
       <div class="callout"><span class="mark">*</span><p>AI를 "붙였다"가 아니라 <b>운영 가능한 형태로 서빙했다</b>가 핵심이었습니다. 모델을 부르는 건 쉽지만, 온프레미스 GPU에서 여러 요청을 감당하며 지연을 관리하는 건 다른 문제입니다. vLLM의 배치 처리와 양자화가 그 간극을 메웠습니다.</p></div>
 
+      <div class="demo" id="demo-translate">
+        <div class="demo-head"><span class="dot"></span><span class="ttl">SafeIn · 안전공지 다국어 번역</span><span class="badge">vLLM · Gemma · 온프레미스</span></div>
+        <div class="demo-body">
+          <div class="tl-presets"></div>
+          <div class="tl-src"><span class="flag">KO · 관리자</span><span class="txt"></span></div>
+          <button class="tl-run" type="button">번역 생성 →</button>
+          <div class="tl-out"></div>
+        </div>
+        <div class="demo-cap">관리자가 공지를 작성하면 근로자의 언어로 자동 번역 — 실제 기능의 프런트 시연입니다 (번역문은 사전 준비된 예시).</div>
+      </div>
+
       <span class="star">Result</span>
       <h2>확장이 구조를 흔들지 않도록</h2>
       <p>단독 개발이었기 때문에 기능 우선순위, API 설계, 데이터 구조, 예외 처리, 배포까지 모든 결정을 스스로 내리고 책임졌습니다. 그만큼 <b>미래를 대비한 경계</b>에 신경 썼습니다. 도메인별로 책임을 분리해 구현한 덕분에, 정책이 바뀌거나 새 도메인을 추가할 때 기존 코드의 수정 범위를 최소화할 수 있었습니다. 지금도 운영(AWS)과 유지보수를 이어가며, 실제 장애에 대응하고 기능을 넓히고 있습니다.</p>
@@ -142,5 +154,6 @@
 </footer>
 
 <script src="../assets/js/site.js" defer></script>
+<script src="../assets/js/demo.js" defer></script>
 </body>
 </html>
