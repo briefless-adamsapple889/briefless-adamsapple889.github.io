@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>안성진 기술 블로그</title>
+    <link>https://lamgul.github.io/writing/</link>
+    <atom:link href="https://lamgul.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>백엔드 개발자 안성진의 기술 블로그 — LLM 서빙, JVM, PostgreSQL, 아키텍처, 보안, 데이터.</description>
+    <language>ko</language>
+    <lastBuildDate>Fri, 01 May 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>온프레미스에서 LLM을 서빙한다는 것 — vLLM과 양자화</title>
+      <link>https://lamgul.github.io/writing/serving-llm-on-prem.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/serving-llm-on-prem.html</guid>
+      <pubDate>Fri, 01 May 2026 00:00:00 GMT</pubDate>
+      <description>PagedAttention·연속 배칭·양자화로 GPU에서 LLM을 운영 속도로.</description>
+    </item>
+    <item>
+      <title>관리자와 근로자는 같은 데이터를 다르게 쓴다 — NestJS 역할 분리</title>
+      <link>https://lamgul.github.io/writing/nestjs-role-based-api.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/nestjs-role-based-api.html</guid>
+      <pubDate>Sun, 01 Mar 2026 00:00:00 GMT</pubDate>
+      <description>모듈·Guard·DTO로 API와 권한을 가르는 법.</description>
+    </item>
+    <item>
+      <title>PostgreSQL 느린 목록 화면 — 인덱스와 keyset 페이지네이션</title>
+      <link>https://lamgul.github.io/writing/postgres-slow-list.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/postgres-slow-list.html</guid>
+      <pubDate>Sat, 01 Nov 2025 00:00:00 GMT</pubDate>
+      <description>EXPLAIN ANALYZE, 복합 인덱스, OFFSET→keyset.</description>
+    </item>
+    <item>
+      <title>Docker 이미지를 반으로 — 멀티스테이지와 레이어 캐시</title>
+      <link>https://lamgul.github.io/writing/docker-image-diet.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/docker-image-diet.html</guid>
+      <pubDate>Wed, 01 Oct 2025 00:00:00 GMT</pubDate>
+      <description>런타임만 남기고, 캐시 순서로 재빌드를 몇 초로.</description>
+    </item>
+    <item>
+      <title>힙덤프 읽는 법 — MAT의 Dominator Tree로 범인 찾기</title>
+      <link>https://lamgul.github.io/writing/reading-heap-dumps.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/reading-heap-dumps.html</guid>
+      <pubDate>Mon, 01 Sep 2025 00:00:00 GMT</pubDate>
+      <description>Retained Heap·Leak Suspects·Path to GC Roots.</description>
+    </item>
+    <item>
+      <title>Adapter로 크롤러를 무한 확장하고, Backoff로 안 잘리기</title>
+      <link>https://lamgul.github.io/writing/adapter-and-backoff.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/adapter-and-backoff.html</guid>
+      <pubDate>Fri, 01 Aug 2025 00:00:00 GMT</pubDate>
+      <description>사이트별 차이는 Adapter 뒤로, 재시도는 지수 백오프+지터.</description>
+    </item>
+    <item>
+      <title>이 사이트를 배포하며 부딪힌 다섯 개의 벽</title>
+      <link>https://lamgul.github.io/writing/shipping-this-portfolio.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/shipping-this-portfolio.html</guid>
+      <pubDate>Tue, 01 Jul 2025 00:00:00 GMT</pubDate>
+      <description>가변폰트·SVG arc·타입에러·gitignore·옵저버 타이밍.</description>
+    </item>
+    <item>
+      <title>데이터베이스 없이 상태를 버티기</title>
+      <link>https://lamgul.github.io/writing/state-without-a-database.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/state-without-a-database.html</guid>
+      <pubDate>Sun, 01 Jun 2025 00:00:00 GMT</pubDate>
+      <description>영속성을 빼면 무엇이 단순해지고 무엇이 무너지나.</description>
+    </item>
+    <item>
+      <title>반복 업무를 죽이는 자동화 — 보고서 생성을 절반으로</title>
+      <link>https://lamgul.github.io/writing/killing-repetitive-work.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/killing-repetitive-work.html</guid>
+      <pubDate>Thu, 01 May 2025 00:00:00 GMT</pubDate>
+      <description>pandas·openpyxl, 그리고 확보한 시간의 재투자.</description>
+    </item>
+    <item>
+      <title>정규식을 손으로 파싱하기</title>
+      <link>https://lamgul.github.io/writing/parsing-regex-by-hand.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/parsing-regex-by-hand.html</guid>
+      <pubDate>Tue, 01 Apr 2025 00:00:00 GMT</pubDate>
+      <description>라이브러리 없이 재귀 하강 파서. 문법이 곧 함수.</description>
+    </item>
+    <item>
+      <title>가변 폰트로 UI에 숨을 불어넣기</title>
+      <link>https://lamgul.github.io/writing/variable-fonts-in-ui.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/variable-fonts-in-ui.html</guid>
+      <pubDate>Sat, 01 Feb 2025 00:00:00 GMT</pubDate>
+      <description>font-variation-settings의 함정과 가능성.</description>
+    </item>
+    <item>
+      <title>웹 서버 하드닝 체크리스트 — ServerTokens부터 헤더까지</title>
+      <link>https://lamgul.github.io/writing/web-server-hardening.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/web-server-hardening.html</guid>
+      <pubDate>Sun, 01 Dec 2024 00:00:00 GMT</pubDate>
+      <description>버전 노출 제거, 보안 헤더, 표면 줄이기.</description>
+    </item>
+    <item>
+      <title>Redis로 목록을 캐싱할 때 진짜 어려운 건 무효화</title>
+      <link>https://lamgul.github.io/writing/redis-cache-invalidation.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/redis-cache-invalidation.html</guid>
+      <pubDate>Sun, 01 Sep 2024 00:00:00 GMT</pubDate>
+      <description>TTL·스탬피드·이벤트 기반 무효화.</description>
+    </item>
+    <item>
+      <title>Feature Engineering 실전 — 불쾌지수가 강수량을 이긴 이유</title>
+      <link>https://lamgul.github.io/writing/feature-engineering-in-practice.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/feature-engineering-in-practice.html</guid>
+      <pubDate>Sat, 01 Jun 2024 00:00:00 GMT</pubDate>
+      <description>다중공선성 정리와 도메인 파생 변수.</description>
+    </item>
+    <item>
+      <title>관측 가능성 — 새벽에 안 깨려면 무엇을 남겨야 하나</title>
+      <link>https://lamgul.github.io/writing/observability-basics.html</link>
+      <guid isPermaLink="true">https://lamgul.github.io/writing/observability-basics.html</guid>
+      <pubDate>Fri, 01 Mar 2024 00:00:00 GMT</pubDate>
+      <description>로그·메트릭·트레이스, 구조화 로깅과 상관 ID.</description>
+    </item>
+  </channel>
+</rss>
