@@ -67,6 +67,39 @@
 <h2>흐름을 필터로 쪼갠다 — Pipe &amp; Filter</h2>
 <p>먼저 데이터 처리 흐름을 단계로 나눴습니다. <b>수집 → 정제 → 변환 → 저장.</b> 각 단계를 독립적인 필터로 구성하는 Pipe &amp; Filter 아키텍처를 적용했습니다. 각 필터는 입력을 받아 처리 후 다음 필터로 넘깁니다. 단계 간 결합이 사라지니 각 단계를 독립적으로 테스트할 수 있게 됐습니다.</p>
 
+<figure class="arch">
+  <svg viewBox="0 0 820 210" width="820" height="210" role="img" aria-label="크롤링 파이프라인 아키텍처">
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L10 5 L0 10 z" class="d-arrow"/>
+      </marker>
+    </defs>
+    <rect class="d-box fill" x="16" y="82" width="92" height="48" rx="9"/>
+    <text class="d-label" x="62" y="111">Internet</text>
+    <rect class="d-group" x="132" y="34" width="122" height="142" rx="10"/>
+    <text class="d-gtext" x="140" y="28">PLATFORMS</text>
+    <rect class="d-box" x="148" y="48" width="90" height="32" rx="7"/><text class="d-label" x="193" y="69" style="font-size:11px">Platform 1</text>
+    <rect class="d-box" x="148" y="90" width="90" height="32" rx="7"/><text class="d-label" x="193" y="111" style="font-size:11px">Platform 2</text>
+    <rect class="d-box" x="148" y="132" width="90" height="32" rx="7"/><text class="d-label" x="193" y="153" style="font-size:11px">Platform N</text>
+    <rect class="d-box accent" x="286" y="78" width="110" height="54" rx="9"/>
+    <text class="d-label" x="341" y="101">Adapter</text><text class="d-sub" x="341" y="119">CrawlerInterface</text>
+    <rect class="d-group" x="428" y="34" width="190" height="142" rx="10"/>
+    <text class="d-gtext" x="436" y="28">PIPE &amp; FILTER</text>
+    <rect class="d-box fill" x="444" y="46" width="158" height="26" rx="6"/><text class="d-label" x="523" y="64" style="font-size:11px">수집</text>
+    <rect class="d-box fill" x="444" y="78" width="158" height="26" rx="6"/><text class="d-label" x="523" y="96" style="font-size:11px">정제</text>
+    <rect class="d-box fill" x="444" y="110" width="158" height="26" rx="6"/><text class="d-label" x="523" y="128" style="font-size:11px">변환</text>
+    <rect class="d-box fill" x="444" y="142" width="158" height="26" rx="6"/><text class="d-label" x="523" y="160" style="font-size:11px">저장</text>
+    <rect class="d-box teal" x="656" y="42" width="118" height="46" rx="8"/><text class="d-label" x="715" y="63">LLM</text><text class="d-sub" x="715" y="79">콘텐츠 생성</text>
+    <rect class="d-box teal" x="656" y="112" width="118" height="46" rx="8"/><text class="d-label" x="715" y="140">AWS RDS</text>
+    <path class="d-rail" d="M108 106 H132" marker-end="url(#ar)"/>
+    <path class="d-rail" d="M254 105 H286" marker-end="url(#ar)"/>
+    <path class="d-rail" d="M396 105 H428" marker-end="url(#ar)"/>
+    <path class="d-rail" d="M618 64 H656" marker-end="url(#ar)"/>
+    <path class="d-rail" d="M618 135 H656" marker-end="url(#ar)"/>
+  </svg>
+  <figcaption>사이트별 차이는 Adapter 뒤에 숨기고, 처리는 독립 필터의 파이프로. 새 사이트는 Adapter만 추가하면 된다.</figcaption>
+</figure>
+
 <span class="star">구조 ②</span>
 <h2>사이트별 차이는 Adapter 뒤에 숨긴다</h2>
 <p>다음은 사이트별 크롤러를 어떻게 통합하느냐였습니다. Adapter 패턴으로 공통 인터페이스 <code>CrawlerInterface</code>를 정의하고, 사이트마다 Adapter를 구현했습니다. 새 사이트를 추가할 때는 기존 코드를 <b>단 한 줄도 건드리지 않고</b> 새 Adapter만 추가하면 됩니다. 개방-폐쇄 원칙(OCP)이 코드로 실현된 지점입니다.</p>

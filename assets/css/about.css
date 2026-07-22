@@ -128,6 +128,18 @@
 .now-list li:last-child { border-bottom: 0; }
 .now-list li span:first-child { color: var(--accent); font-family: var(--mono); font-size: var(--t--1); min-width: 5.5em; }
 
+/* chips (about hero actions — about.css doesn't load project.css) */
+.chip {
+  display: inline-flex; align-items: center; gap: 0.45em;
+  border: 1px solid var(--line-2); border-radius: 100px;
+  padding: 0.5em 1em; font-size: var(--t-0); color: var(--ink);
+  background: var(--bg-elev); cursor: pointer;
+  transition: border-color .2s, background .2s, transform .2s;
+}
+.chip:hover { border-color: var(--accent); transform: translateY(-1px); }
+.chip.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.chip.primary:hover { background: var(--accent-press); }
+
 /* ---- print: turn the about page into a clean one-look CV ---- */
 @media print {
   :root {
