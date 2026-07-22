@@ -6,6 +6,8 @@
 
 [**→ lamgul.github.io**](https://lamgul.github.io/)  ·  NestJS · Spring · Python · YOLO · vLLM · AWS
 
+[![links](https://github.com/lamgul/lamgul.github.io/actions/workflows/links.yml/badge.svg)](https://github.com/lamgul/lamgul.github.io/actions/workflows/links.yml)
+
 ![포트폴리오 미리보기](assets/img/og.png)
 
 </div>
