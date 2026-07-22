@@ -17,6 +17,14 @@
   <url><loc>https://lamgul.github.io/writing/state-without-a-database.html</loc><priority>0.6</priority></url>
   <url><loc>https://lamgul.github.io/writing/parsing-regex-by-hand.html</loc><priority>0.6</priority></url>
   <url><loc>https://lamgul.github.io/writing/variable-fonts-in-ui.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lamgul.github.io/writing/serving-llm-on-prem.html</loc><priority>0.7</priority></url>
+  <url><loc>https://lamgul.github.io/writing/nestjs-role-based-api.html</loc><priority>0.7</priority></url>
+  <url><loc>https://lamgul.github.io/writing/postgres-slow-list.html</loc><priority>0.7</priority></url>
+  <url><loc>https://lamgul.github.io/writing/reading-heap-dumps.html</loc><priority>0.7</priority></url>
+  <url><loc>https://lamgul.github.io/writing/adapter-and-backoff.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lamgul.github.io/writing/killing-repetitive-work.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lamgul.github.io/writing/web-server-hardening.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lamgul.github.io/writing/feature-engineering-in-practice.html</loc><priority>0.6</priority></url>
   <url><loc>https://lamgul.github.io/projects/type-playground/</loc><priority>0.6</priority></url>
   <url><loc>https://lamgul.github.io/projects/livepoll/</loc><priority>0.6</priority></url>
   <url><loc>https://lamgul.github.io/projects/rail/</loc><priority>0.6</priority></url>

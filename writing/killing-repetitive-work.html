@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>반복 업무를 죽이는 자동화 — 보고서 생성을 절반으로 — 안성진</title>
+<meta name="description" content="매주 손으로 만들던 Excel 보고서를 pandas·openpyxl로 자동화해 처리시간을 절반으로 줄인 이야기. 자동화가 만든 시간을 어디에 재투자했나.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="반복 업무를 죽이는 자동화 — 보고서 생성을 절반으로">
+<meta property="og:description" content="매주 손으로 만들던 Excel 보고서를 pandas·openpyxl로 자동화해 처리시간을 절반으로 줄인 이야기. 자동화가 만든 시간을 어디에 재투자했나.">
+<meta property="og:image" content="https://lamgul.github.io/assets/img/og.png">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/project.css">
+<link rel="stylesheet" href="../assets/css/writing.css">
+<script>
+  (function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;else document.documentElement.removeAttribute("data-theme");}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#body">본문으로 건너뛰기</a>
+
+<header class="proj-header" data-header>
+  <div class="wrap header-inner">
+    <a class="back-link" href="index.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      <span class="brand-mini">글 목록</span>
+    </a>
+    <div class="spacer"></div>
+    <span class="crumb">writing / killing-repetitive-work</span>
+    <button class="icon-btn theme-toggle" data-theme-toggle aria-label="테마 전환" style="margin-left:var(--sp-3)">
+      <svg class="moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="post-hero">
+    <p class="eyebrow">자동화 · Python</p>
+    <h1>반복 업무를 죽이는 자동화 — 보고서 생성을 절반으로</h1>
+    <div class="post-meta">
+      <span>2025년 5월</span><span class="dot-sep">•</span>
+      <span>약 6분</span><span class="dot-sep">•</span>
+      <span>pandas · openpyxl · 스케줄</span>
+    </div>
+  </section>
+
+  <article class="post-body" id="body">
+    <p class="lead">저는 반복 업무를 보면 가장 먼저 자동화를 떠올립니다. 같은 일을 두 번 하지 않는 것이, 늘어나는 업무를 감당하는 가장 확실한 방법이기 때문입니다. 협회에서는 매주 반복되는 보고서 생성이 첫 표적이었습니다.</p>
+
+<h2>수작업의 해부</h2>
+<p>먼저 사람이 하던 일을 단계로 쪼갰습니다. 여러 소스에서 데이터 내려받기 → 시트별로 붙여넣기 → 피벗 → 서식 → 배포. 각 단계가 자동화 가능한지 따졌고, 대부분 가능했습니다. 사람의 판단이 필요한 건 마지막 검토 한 곳뿐이었죠.</p>
+
+<h2>집계는 pandas, 서식은 openpyxl</h2>
+<pre class="code"><span class="k">import</span> pandas <span class="k">as</span> pd
+df = pd.concat([pd.read_excel(f) <span class="k">for</span> f <span class="k">in</span> sources])
+pivot = df.pivot_table(index=<span class="s">"통신사"</span>, columns=<span class="s">"월"</span>,
+                       values=<span class="s">"민원"</span>, aggfunc=<span class="s">"sum"</span>, fill_value=<span class="s">0</span>)
+<span class="c"># 계산은 pandas가, '보이는 보고서'는 openpyxl이</span>
+<span class="k">with</span> pd.ExcelWriter(<span class="s">"report.xlsx"</span>, engine=<span class="s">"openpyxl"</span>) <span class="k">as</span> w:
+    pivot.to_excel(w, sheet_name=<span class="s">"요약"</span>)
+    style_header(w.sheets[<span class="s">"요약"</span>])  <span class="c"># 사람이 보던 그 서식 그대로</span></pre>
+<p>핵심은 <b>산출물을 사람이 보던 형태 그대로</b> 만드는 것이었습니다. 자동화가 만든 결과물이 낯설면 아무도 안 씁니다. 통신사·협력기관별로 제각각이던 보고 프로세스를 하나로 표준화하니, 처리시간이 눈에 띄게(약 50%, 다른 보고선 30%) 줄었습니다.</p>
+
+<h2>남는 건 시간이 아니라 여유</h2>
+<p>자동화로 확보한 시간을 저는 <b>더 나은 일에 재투자</b>했습니다 — 회원사 렌터카 서비스 MVP 설계와 임시 PM 역할이 그 시간에서 나왔습니다. 자동화의 진짜 가치는 절약한 시간이 아니라, 그 시간에 할 수 있게 된 <b>다른 일</b>에 있습니다.</p>
+    
+  </article>
+
+  <nav class="proj-nav wrap" aria-label="글 이동">
+    <a class="prev" href="index.html"><div class="np-key">← 글 목록</div><div class="np-title">전체 보기</div></a>
+    <a class="next" href="web-server-hardening.html"><div class="np-key">다음 글 →</div><div class="np-title">웹 서버 하드닝 체크리스트</div></a>
+  </nav>
+</main>
+
+<footer class="site-footer wrap">
+  <div class="colophon"><span>© <span data-year>2025</span> 안성진</span><span><a href="../index.html">홈으로</a></span></div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

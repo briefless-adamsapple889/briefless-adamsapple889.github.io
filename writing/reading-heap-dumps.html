@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>힙덤프 읽는 법 — MAT의 Dominator Tree로 범인 찾기 — 안성진</title>
+<meta name="description" content="메모리 누수를 추적할 때 힙덤프를 어떻게 뜨고, Eclipse MAT의 Dominator Tree·Leak Suspects·GC Roots로 어떻게 범인을 좁히는지 실무 순서대로.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="힙덤프 읽는 법 — MAT의 Dominator Tree로 범인 찾기">
+<meta property="og:description" content="메모리 누수를 추적할 때 힙덤프를 어떻게 뜨고, Eclipse MAT의 Dominator Tree·Leak Suspects·GC Roots로 어떻게 범인을 좁히는지 실무 순서대로.">
+<meta property="og:image" content="https://lamgul.github.io/assets/img/og.png">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/project.css">
+<link rel="stylesheet" href="../assets/css/writing.css">
+<script>
+  (function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;else document.documentElement.removeAttribute("data-theme");}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#body">본문으로 건너뛰기</a>
+
+<header class="proj-header" data-header>
+  <div class="wrap header-inner">
+    <a class="back-link" href="index.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      <span class="brand-mini">글 목록</span>
+    </a>
+    <div class="spacer"></div>
+    <span class="crumb">writing / reading-heap-dumps</span>
+    <button class="icon-btn theme-toggle" data-theme-toggle aria-label="테마 전환" style="margin-left:var(--sp-3)">
+      <svg class="moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="post-hero">
+    <p class="eyebrow">JVM · 트러블슈팅</p>
+    <h1>힙덤프 읽는 법 — MAT의 Dominator Tree로 범인 찾기</h1>
+    <div class="post-meta">
+      <span>2025년 9월</span><span class="dot-sep">•</span>
+      <span>약 8분</span><span class="dot-sep">•</span>
+      <span>Heap Dump · MAT · GC</span>
+    </div>
+  </section>
+
+  <article class="post-body" id="body">
+    <p class="lead">7일마다 죽던 서버의 진짜 원인은 힙덤프 안에 있었습니다. 문제는 <b>힙덤프를 읽을 줄 몰랐다</b>는 것. 그때 익힌 순서를 정리합니다. 겁먹을 것 없이, 몇 개의 화면만 보면 됩니다.</p>
+
+<h2>1. 사고 순간을 자동으로 잡는다</h2>
+<pre class="code"><span class="c"># OOM이 나는 그 순간을 자동으로 덤프</span>
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=/var/log/app/heap.hprof
+
+<span class="c"># 살아있는 프로세스를 수동으로 뜰 때</span>
+jmap -dump:live,format=b,file=heap.hprof &lt;pid&gt;</pre>
+<p>재현이 어려운 누수일수록 <code>HeapDumpOnOutOfMemoryError</code>가 생명줄입니다. 터지는 순간의 스냅샷이 곧 증거니까요.</p>
+
+<h2>2. Dominator Tree로 "누가 붙잡고 있나"</h2>
+<p>Eclipse MAT를 열면 가장 먼저 볼 것은 <b>Dominator Tree</b>입니다. 여기서 중요한 건 <code>Shallow Heap</code>(그 객체 자체 크기)이 아니라 <b><code>Retained Heap</code></b>(그 객체가 사라지면 함께 회수될 총 크기)입니다. Retained가 압도적으로 큰 객체가 범인입니다. 저는 특정 캐시 클래스 하나가 <b>힙의 80%</b>를 retained로 쥐고 있는 걸 봤습니다.</p>
+
+<h2>3. Leak Suspects와 GC Roots</h2>
+<p>MAT의 <b>Leak Suspects</b> 리포트는 의심 객체를 자동으로 짚어줍니다. 시작점으로 훌륭하죠. 그다음 "이게 왜 GC에 안 먹히지?"는 <b>Path to GC Roots</b>로 봅니다 — 이 객체를 살려두는 참조 사슬을 뿌리까지 그려줍니다. 제 경우 그 사슬 끝에 <b>동기화 없이 공유되던 static 컬렉션</b>이 있었습니다.</p>
+<div class="callout"><span class="mark">*</span><p>"Path to GC Roots → exclude weak/soft references" 옵션을 꼭 켜세요. 약참조는 어차피 회수되니, 진짜로 객체를 붙잡는 <b>강참조 경로</b>만 봐야 범인이 보입니다.</p></div>
+
+<h2>4. 증상이 아니라 원인</h2>
+<p>힙덤프가 알려준 건 "무엇이 쌓였나"였고, 코드로 돌아가 "왜 쌓였나"를 봤습니다. 멀티스레드에서 동기화가 빠져 객체가 회수되지 못하고 있었죠. <code>synchronized</code> 한 줄이 답이었습니다. 도구는 범위를 좁혀줄 뿐, 마지막 한 걸음은 결국 코드를 읽는 일입니다.</p>
+    <div class="post-cta"><span class="t">이 추적의 전말 → <b>7일마다 죽던 서버</b></span><a class="chip primary" href="../cases/memory-leak.html">사례 보기 ↗</a></div>
+  </article>
+
+  <nav class="proj-nav wrap" aria-label="글 이동">
+    <a class="prev" href="index.html"><div class="np-key">← 글 목록</div><div class="np-title">전체 보기</div></a>
+    <a class="next" href="adapter-and-backoff.html"><div class="np-key">다음 글 →</div><div class="np-title">Adapter로 크롤러를 무한 확장하기</div></a>
+  </nav>
+</main>
+
+<footer class="site-footer wrap">
+  <div class="colophon"><span>© <span data-year>2025</span> 안성진</span><span><a href="../index.html">홈으로</a></span></div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

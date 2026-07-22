@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>글 — ann</title>
-<meta name="description" content="풀스택 개발자 ann의 개발 기록. 상태 설계, 파서, 가변 폰트에 대한 글.">
+<title>기술 블로그 — 안성진</title>
+<meta name="description" content="백엔드 개발자 안성진의 기술 블로그 — LLM 서빙, JVM 트러블슈팅, PostgreSQL 성능, NestJS, 보안, 데이터. 실무에서 배운 것을 구체적으로 기록합니다.">
 <meta name="color-scheme" content="light dark">
-<meta property="og:title" content="글 — ann">
-<meta property="og:description" content="만들면서 남긴 기록들.">
+<meta property="og:title" content="기술 블로그 — 안성진">
+<meta property="og:description" content="실무에서 배운 것을 구체적으로 기록합니다.">
 <meta property="og:image" content="https://lamgul.github.io/assets/img/og.png">
 <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="../assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -24,7 +24,7 @@
 
 <header class="site-header" data-header>
   <div class="wrap header-inner">
-    <a class="brand" href="../index.html" aria-label="ann, 홈">ann<span class="dot">.</span></a>
+    <a class="brand" href="../index.html" aria-label="안성진, 홈">ann<span class="dot">.</span></a>
     <nav class="nav" aria-label="주요">
       <a class="nav-hide" href="../cases/"><span class="num">01</span>사례</a>
       <a class="nav-hide" href="../index.html#work"><span class="num">02</span>실험</a>
@@ -40,45 +40,107 @@
 
 <main id="main">
   <section class="writing-hero wrap">
-    <p class="eyebrow">Writing</p>
-    <h1>만들면서 남긴 것</h1>
-    <p>코드를 짜다 보면 "왜 이렇게 했지"를 스스로 설명해야 하는 순간이 옵니다. 그 설명을 글로 붙잡아 둡니다. 대부분 위 <a class="u-link" href="../index.html#work">작업</a>의 뒷이야기입니다.</p>
+    <p class="eyebrow">Tech Blog · 총 12편</p>
+    <h1>실무에서 배운 것을<br>구체적으로 남깁니다</h1>
+    <p>코드를 짜다 "왜 이렇게 했지"를 스스로 설명해야 하는 순간, 그 설명을 글로 붙잡아 둡니다. LLM 서빙부터 JVM 힙덤프, 쿼리 튜닝, 보안까지 — 대부분 <a class="u-link" href="../cases/">실무 사례</a>의 뒷이야기이자 how-to입니다.</p>
   </section>
 
   <section class="wrap" id="list">
+    <div class="w-filter" id="w-filter" role="tablist" aria-label="주제 필터">
+      <button class="active" data-tag="all" type="button">전체</button>
+      <button data-tag="백엔드" type="button">백엔드</button>
+      <button data-tag="AI·LLM" type="button">AI·LLM</button>
+      <button data-tag="데이터" type="button">데이터</button>
+      <button data-tag="트러블슈팅" type="button">트러블슈팅</button>
+      <button data-tag="아키텍처" type="button">아키텍처</button>
+      <button data-tag="보안" type="button">보안</button>
+      <button data-tag="프론트" type="button">프론트</button>
+    </div>
+
     <div class="w-list">
-      <a class="w-item" href="shipping-this-portfolio.html">
-        <span class="w-date">2025 · 07</span>
-        <div class="w-body">
-          <h2>이 사이트를 배포하며 부딪힌 다섯 개의 벽</h2>
-          <p>이 포트폴리오를 GitHub Pages까지 올리며 실제로 막혔던 다섯 가지 — 가변폰트 리셋, SVG arc, 타입 에러, .gitignore, 옵저버 타이밍. 증상·원인·해결·교훈.</p>
-        </div>
-        <span class="w-tag">트러블슈팅</span>
-      </a>
-      <a class="w-item" href="state-without-a-database.html">
-        <span class="w-date">2025 · 06</span>
-        <div class="w-body">
-          <h2>데이터베이스 없이 상태를 버티기</h2>
-          <p>실시간 투표를 만들며, 영속성을 아예 빼면 무엇이 단순해지고 무엇이 무너지는지 따라가 본 기록. 인메모리의 유효기간에 대하여.</p>
-        </div>
-        <span class="w-tag">Livepoll</span>
-      </a>
-      <a class="w-item" href="parsing-regex-by-hand.html">
-        <span class="w-date">2025 · 04</span>
-        <div class="w-body">
-          <h2>정규식을 손으로 파싱하기</h2>
-          <p>라이브러리 없이 재귀 하강 파서를 짜며 배운 것. 문법의 우선순위가 어떻게 그대로 함수가 되는가.</p>
-        </div>
-        <span class="w-tag">Rail</span>
-      </a>
-      <a class="w-item" href="variable-fonts-in-ui.html">
-        <span class="w-date">2025 · 02</span>
-        <div class="w-body">
-          <h2>가변 폰트로 UI에 숨을 불어넣기</h2>
-          <p><code>font-variation-settings</code>의 함정과 가능성. 글자 하나에 애니메이션을 넣는 일이 왜 생각보다 섬세한가.</p>
-        </div>
-        <span class="w-tag">Type Playground</span>
-      </a>
+      <div class="w-group">
+        <div class="w-yr">2026</div>
+        <a class="w-item" data-tag="AI·LLM" href="serving-llm-on-prem.html">
+          <span class="w-date">2026 · 05<span class="w-read">약 9분</span></span>
+          <div class="w-body"><h2>온프레미스에서 LLM을 서빙한다는 것 — vLLM과 양자화</h2>
+            <p>현장 데이터를 밖으로 못 보내는 제약 아래, PagedAttention·연속 배칭·양자화로 GPU에서 LLM을 운영 가능한 속도로.</p></div>
+          <span class="w-tag">vLLM · 인프라</span>
+        </a>
+        <a class="w-item" data-tag="백엔드" href="nestjs-role-based-api.html">
+          <span class="w-date">2026 · 03<span class="w-read">약 7분</span></span>
+          <div class="w-body"><h2>관리자와 근로자는 같은 데이터를 다르게 쓴다 — NestJS 역할 분리</h2>
+            <p>모듈 분리·Guard·DTO로 API와 권한을 가르고, 상태·이력을 한곳에서 일관되게 관리한 법.</p></div>
+          <span class="w-tag">NestJS · 권한</span>
+        </a>
+      </div>
+
+      <div class="w-group">
+        <div class="w-yr">2025</div>
+        <a class="w-item" data-tag="백엔드" href="postgres-slow-list.html">
+          <span class="w-date">2025 · 11<span class="w-read">약 8분</span></span>
+          <div class="w-body"><h2>PostgreSQL 느린 목록 화면 — 인덱스와 keyset 페이지네이션</h2>
+            <p>EXPLAIN ANALYZE로 병목을 읽고, 복합 인덱스 순서와 OFFSET→keyset 전환으로 어느 깊이든 일정하게.</p></div>
+          <span class="w-tag">PostgreSQL · 성능</span>
+        </a>
+        <a class="w-item" data-tag="트러블슈팅" href="reading-heap-dumps.html">
+          <span class="w-date">2025 · 09<span class="w-read">약 8분</span></span>
+          <div class="w-body"><h2>힙덤프 읽는 법 — MAT의 Dominator Tree로 범인 찾기</h2>
+            <p>덤프 뜨는 법부터 Retained Heap·Leak Suspects·Path to GC Roots까지, 몇 개의 화면만 보면 된다.</p></div>
+          <span class="w-tag">JVM · MAT</span>
+        </a>
+        <a class="w-item" data-tag="아키텍처" href="adapter-and-backoff.html">
+          <span class="w-date">2025 · 08<span class="w-read">약 7분</span></span>
+          <div class="w-body"><h2>Adapter로 크롤러를 무한 확장하고, Backoff로 안 잘리기</h2>
+            <p>사이트별 차이는 Adapter 뒤로, Rate limit은 지수 백오프+지터로. 무인 자동화의 조건은 관측 가능성.</p></div>
+          <span class="w-tag">패턴 · 크롤링</span>
+        </a>
+        <a class="w-item" data-tag="트러블슈팅" href="shipping-this-portfolio.html">
+          <span class="w-date">2025 · 07<span class="w-read">약 8분</span></span>
+          <div class="w-body"><h2>이 사이트를 배포하며 부딪힌 다섯 개의 벽</h2>
+            <p>가변폰트 리셋, SVG arc, 타입 에러, .gitignore, 옵저버 타이밍 — 실제 디버깅 기록.</p></div>
+          <span class="w-tag">디버깅</span>
+        </a>
+        <a class="w-item" data-tag="백엔드" href="state-without-a-database.html">
+          <span class="w-date">2025 · 06<span class="w-read">약 7분</span></span>
+          <div class="w-body"><h2>데이터베이스 없이 상태를 버티기</h2>
+            <p>영속성을 빼면 무엇이 단순해지고 무엇이 무너지는지. 인메모리의 유효기간에 대하여.</p></div>
+          <span class="w-tag">실시간 · 상태</span>
+        </a>
+        <a class="w-item" data-tag="백엔드" href="killing-repetitive-work.html">
+          <span class="w-date">2025 · 05<span class="w-read">약 6분</span></span>
+          <div class="w-body"><h2>반복 업무를 죽이는 자동화 — 보고서 생성을 절반으로</h2>
+            <p>수작업 Excel 보고서를 pandas·openpyxl로. 자동화가 만든 시간을 어디에 재투자했나.</p></div>
+          <span class="w-tag">Python · 자동화</span>
+        </a>
+        <a class="w-item" data-tag="프론트" href="parsing-regex-by-hand.html">
+          <span class="w-date">2025 · 04<span class="w-read">약 6분</span></span>
+          <div class="w-body"><h2>정규식을 손으로 파싱하기</h2>
+            <p>라이브러리 없이 재귀 하강 파서를. 문법의 우선순위가 어떻게 그대로 함수가 되는가.</p></div>
+          <span class="w-tag">파서 · TS</span>
+        </a>
+        <a class="w-item" data-tag="프론트" href="variable-fonts-in-ui.html">
+          <span class="w-date">2025 · 02<span class="w-read">약 6분</span></span>
+          <div class="w-body"><h2>가변 폰트로 UI에 숨을 불어넣기</h2>
+            <p><code>font-variation-settings</code>의 함정과 가능성. 글자에 애니메이션을 넣는 일의 섬세함.</p></div>
+          <span class="w-tag">CSS · 폰트</span>
+        </a>
+      </div>
+
+      <div class="w-group">
+        <div class="w-yr">2024</div>
+        <a class="w-item" data-tag="보안" href="web-server-hardening.html">
+          <span class="w-date">2024 · 12<span class="w-read">약 7분</span></span>
+          <div class="w-body"><h2>웹 서버 하드닝 체크리스트 — ServerTokens부터 헤더까지</h2>
+            <p>버전 노출 제거, 보안 헤더 세트, 표면 줄이기 — 운영을 깨지 않으면서 하나씩 닫는 법.</p></div>
+          <span class="w-tag">Apache · Nginx</span>
+        </a>
+        <a class="w-item" data-tag="데이터" href="feature-engineering-in-practice.html">
+          <span class="w-date">2024 · 06<span class="w-read">약 7분</span></span>
+          <div class="w-body"><h2>Feature Engineering 실전 — 불쾌지수가 강수량을 이긴 이유</h2>
+            <p>다중공선성(VIF)을 정리하고 도메인 지식으로 파생 변수를. 모델보다 데이터가 순위를 만든다.</p></div>
+          <span class="w-tag">EDA · ML</span>
+        </a>
+      </div>
     </div>
   </section>
 </main>
@@ -99,5 +161,23 @@
 </footer>
 
 <script src="../assets/js/site.js" defer></script>
+<script>
+  (function () {
+    var btns = Array.prototype.slice.call(document.querySelectorAll("#w-filter button"));
+    var items = Array.prototype.slice.call(document.querySelectorAll(".w-item"));
+    var groups = Array.prototype.slice.call(document.querySelectorAll(".w-group"));
+    btns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        btns.forEach(function (x) { x.classList.toggle("active", x === b); });
+        var t = b.dataset.tag;
+        items.forEach(function (it) { it.hidden = t !== "all" && it.dataset.tag !== t; });
+        groups.forEach(function (g) {
+          var any = Array.prototype.slice.call(g.querySelectorAll(".w-item")).some(function (it) { return !it.hidden; });
+          g.hidden = !any;
+        });
+      });
+    });
+  })();
+</script>
 </body>
 </html>
