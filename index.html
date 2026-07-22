@@ -3,15 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ann — 풀스택 개발자</title>
-<meta name="description" content="인터페이스와 인프라 사이의 모든 것을 만드는 풀스택 개발자 ann의 작업과 글. React, TypeScript, Node, Python.">
-<meta name="author" content="ann">
+<title>안성진 — 백엔드 개발자</title>
+<meta name="description" content="근본 원인까지 파고드는 백엔드 개발자 안성진의 실무 사례와 실험. NestJS·Spring·Python, YOLO 차량감지, 온프레미스 LLM 서빙, 장애 트러블슈팅.">
+<meta name="author" content="안성진">
 <meta name="color-scheme" content="light dark">
 
-<!-- open graph -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="ann — 풀스택 개발자">
-<meta property="og:description" content="인터페이스와 인프라 사이의 모든 것을 만듭니다.">
+<meta property="og:title" content="안성진 — 백엔드 개발자">
+<meta property="og:description" content="표면이 아니라 근본을 고칩니다. 인터페이스와 인프라 사이의 모든 것.">
 <meta property="og:url" content="https://lamgul.github.io/">
 <meta property="og:image" content="https://lamgul.github.io/assets/img/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -20,12 +19,10 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preload" href="assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
-<!-- korean text: Pretendard where available, system fallback otherwise -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/home.css">
 
-<!-- set theme before paint to avoid a flash -->
 <script>
   (function () {
     try {
@@ -37,15 +34,16 @@
 </script>
 </head>
 <body>
-<a class="skip" href="#work">본문으로 건너뛰기</a>
+<a class="skip" href="#cases">본문으로 건너뛰기</a>
 
 <header class="site-header" data-header>
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="ann, 홈">ann<span class="dot">.</span></a>
+    <a class="brand" href="/" aria-label="안성진, 홈">ann<span class="dot">.</span></a>
     <nav class="nav" aria-label="주요">
-      <a class="nav-hide" href="#work"><span class="num">01</span>작업</a>
-      <a class="nav-hide" href="writing/"><span class="num">02</span>글</a>
-      <a class="nav-hide" href="about.html"><span class="num">03</span>소개</a>
+      <a class="nav-hide" href="#cases"><span class="num">01</span>사례</a>
+      <a class="nav-hide" href="#work"><span class="num">02</span>실험</a>
+      <a class="nav-hide" href="writing/"><span class="num">03</span>글</a>
+      <a class="nav-hide" href="about.html"><span class="num">04</span>소개</a>
       <button class="icon-btn theme-toggle" data-theme-toggle aria-pressed="false" aria-label="다크/라이트 테마 전환">
         <svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
         <svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
@@ -60,7 +58,7 @@
   <section class="hero wrap">
     <p class="hero-status reveal">
       <span class="pulse" aria-hidden="true"></span>
-      새로운 팀을 찾는 중 · 서울, 원격 모두 가능
+      백엔드 개발자 · 서울 · 새로운 팀을 찾는 중
     </p>
     <h1 class="reveal" style="--rd:60ms">
       <span class="line">인터페이스와</span>
@@ -68,56 +66,119 @@
       <span class="line">모든 것을 만듭니다.</span>
     </h1>
     <p class="hero-sub reveal" style="--rd:140ms">
-      서울에서 일하는 <b>풀스택 개발자</b>입니다. React와 TypeScript로 화면을 그리고,
-      Node와 Python으로 그 뒤를 받칩니다. DB 스키마를 뜯어고치는 새벽부터
-      애니메이션 이징 곡선을 0.05초 단위로 만지는 오후까지 — 제품이 실제로
-      돌아가게 만드는 일이라면 어느 층이든 내려갑니다.
+      백엔드 개발자 <b>안성진</b>입니다. NestJS와 Spring으로 서버를 짜고, 장애가 나면
+      힙덤프까지 파고듭니다. YOLO 차량감지부터 온프레미스 LLM 서빙까지 —
+      <b>제품이 실제로 돌아가게 만드는 일</b>이라면 층을 가리지 않습니다.
     </p>
     <div class="hero-foot reveal" style="--rd:220ms">
-      <a class="btn" href="#work">
-        작업 보기
+      <a class="btn" href="#cases">
+        실무 사례 보기
         <svg class="arr" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg>
       </a>
       <a class="btn btn-ghost" href="https://github.com/lamgul" target="_blank" rel="noopener">GitHub</a>
-      <a class="u-link mono" href="mailto:asj2767@gmail.com" style="font-size:var(--t--1)">asj2767@gmail.com</a>
+      <a class="u-link mono" href="mailto:lamgul@naver.com" style="font-size:var(--t--1)">lamgul@naver.com</a>
     </div>
   </section>
 
-  <!-- ============ selected work ============ -->
-  <section class="section wrap" id="work">
+  <!-- ============ selected cases (real work) ============ -->
+  <section class="section wrap" id="cases">
     <div class="section-head">
-      <h2>선택한 작업<span class="accent">.</span></h2>
-      <span class="count">05 / projects</span>
+      <h2>실무 사례<span class="accent">.</span></h2>
+      <a class="u-link mono" href="cases/" style="font-size:var(--t--1)">전체 7건 보기 →</a>
     </div>
 
     <div class="work">
-      <!-- 01 -->
+      <a class="work-row reveal" href="cases/safein.html">
+        <span class="work-num">01</span>
+        <div class="work-main">
+          <span class="work-title">SafeIn 산업안전 시스템 <span class="sub">코드엣지 · 2026</span></span>
+          <p class="work-desc">컨셉만 있던 요구에서 업무 흐름을 분석해 백엔드를 단독 설계. 관리자 Web·근로자 App·AI 다국어 번역까지, 온프레미스 GPU에 vLLM으로 서빙.</p>
+          <div class="work-tags"><span class="tag">아키텍처 설계</span><span class="tag">NestJS</span><span class="tag">vLLM · GPU</span><span class="tag">단독 개발</span></div>
+        </div>
+        <div class="work-side">
+          <span class="work-year">15개 언어 AI</span>
+          <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+        </div>
+      </a>
+      <a class="work-row reveal" href="cases/memory-leak.html">
+        <span class="work-num">02</span>
+        <div class="work-main">
+          <span class="work-title">7일마다 죽던 서버 <span class="sub">대흥정보 · 2022</span></span>
+          <p class="work-desc">1년간 방치된 주기적 장애. CPU 100%를 원인으로 착각하지 않고 Scouter APM·힙덤프까지 파고들어, 멀티스레드 동기화 누락을 찾아 근본 해결.</p>
+          <div class="work-tags"><span class="tag">트러블슈팅</span><span class="tag">JVM · Heap Dump</span><span class="tag">Scouter</span></div>
+        </div>
+        <div class="work-side">
+          <span class="work-year">7일→30일+</span>
+          <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+        </div>
+      </a>
+      <a class="work-row reveal" href="cases/vehicle-detection.html">
+        <span class="work-num">03</span>
+        <div class="work-main">
+          <span class="work-title">YOLO 차량감지 <span class="sub">대흥정보 · 2023</span></span>
+          <p class="work-desc">비싼 매설형 루프 센서를 카메라로 대체. 사전학습 YOLO의 '차량' 클래스를 재사용해 데이터 수집 없이 2주 만에 실시간 프로토타입을 만들어 사업화.</p>
+          <div class="work-tags"><span class="tag">Vision AI</span><span class="tag">YOLOv5</span><span class="tag">MVP</span></div>
+        </div>
+        <div class="work-side">
+          <span class="work-year">2주 → 사업화</span>
+          <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+        </div>
+      </a>
+      <a class="work-row reveal" href="cases/power-forecast.html">
+        <span class="work-num">04</span>
+        <div class="work-main">
+          <span class="work-title">전력사용량 예측 <span class="sub">해커톤 · AI 부문</span></span>
+          <p class="work-desc">원시 기상 데이터를 그대로 넣는 대신 불쾌지수·체감온도 같은 파생 변수를 설계하고 다중공선성을 정리. Feature Engineering이 성능을 가른다는 걸 체감.</p>
+          <div class="work-tags"><span class="tag">ML</span><span class="tag">Feature Engineering</span><span class="tag">EDA</span></div>
+        </div>
+        <div class="work-side">
+          <span class="work-year">리더보드 10위</span>
+          <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ skills marquee ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>NestJS</span><span>Spring</span><span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>Docker</span><span>Kubernetes</span><span>AWS</span><span>YOLO</span><span>vLLM</span><span>Scouter APM</span><span>DDD</span>
+      <span>NestJS</span><span>Spring</span><span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>Docker</span><span>Kubernetes</span><span>AWS</span><span>YOLO</span><span>vLLM</span><span>Scouter APM</span><span>DDD</span>
+    </div>
+  </div>
+
+  <!-- ============ experiments (side projects) ============ -->
+  <section class="section wrap" id="work">
+    <div class="section-head">
+      <h2>실험<span class="accent">.</span></h2>
+      <span class="count">side experiments — 궁금해서 만든 것들</span>
+    </div>
+
+    <div class="work">
       <a class="work-row reveal" href="projects/type-playground/" data-preview="assets/img/covers/type-playground.svg">
         <span class="work-num">01</span>
         <div class="work-main">
           <span class="work-title">활자 실험실 <span class="sub">Type Playground</span></span>
-          <p class="work-desc">가변 폰트의 축(weight·optical size·slant)을 실시간으로 만지며 타이포그래피를 조율하는 도구. 슬라이더 하나에 글자가 숨을 쉰다.</p>
-          <div class="work-tags"><span class="tag">Vanilla JS</span><span class="tag">Variable Fonts</span><span class="tag">Canvas</span><span class="tag">CSS</span></div>
+          <p class="work-desc">가변 폰트의 다섯 축을 실시간으로 만지며 타이포그래피를 조율하는 도구. 슬라이더 하나에 글자가 숨을 쉰다.</p>
+          <div class="work-tags"><span class="tag">Vanilla JS</span><span class="tag">Variable Fonts</span><span class="tag">Canvas</span></div>
         </div>
         <div class="work-side">
           <span class="work-year">2025</span>
           <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
         </div>
       </a>
-      <!-- 02 -->
       <a class="work-row reveal" href="projects/livepoll/" data-preview="assets/img/covers/livepoll.svg">
         <span class="work-num">02</span>
         <div class="work-main">
           <span class="work-title">살아있는 투표 <span class="sub">Livepoll</span></span>
-          <p class="work-desc">데이터베이스 없이 메모리와 WebSocket만으로 굴러가는 실시간 투표. 서버가 상태를 어디까지 들고 있어야 하는가에 대한 실험.</p>
-          <div class="work-tags"><span class="tag">React</span><span class="tag">Node · Express</span><span class="tag">Socket.IO</span><span class="tag">TypeScript</span></div>
+          <p class="work-desc">데이터베이스 없이 메모리와 WebSocket만으로 굴러가는 실시간 투표. 트랜스포트 추상화로 라이브·데모를 한 빌드로.</p>
+          <div class="work-tags"><span class="tag">React</span><span class="tag">Socket.IO</span><span class="tag">TypeScript</span></div>
         </div>
         <div class="work-side">
           <span class="work-year">2025</span>
           <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
         </div>
       </a>
-      <!-- 03 -->
       <a class="work-row reveal" href="projects/rail/" data-preview="assets/img/covers/rail.svg">
         <span class="work-num">03</span>
         <div class="work-main">
@@ -130,12 +191,11 @@
           <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
         </div>
       </a>
-      <!-- 04 -->
       <a class="work-row reveal" href="projects/commit-rhythm/" data-preview="assets/img/covers/commit-rhythm.svg">
         <span class="work-num">04</span>
         <div class="work-main">
           <span class="work-title">새벽의 커밋 <span class="sub">Commit Rhythm</span></span>
-          <p class="work-desc">3년치 커밋 로그로 그려본 "나는 언제 코딩하는가". 펀치카드 히트맵, 스트릭, 언어 분포를 스크롤로 따라가는 데이터 스토리.</p>
+          <p class="work-desc">커밋 로그로 그려본 "나는 언제 코딩하는가". 펀치카드 히트맵, 기여도 캘린더, 언어 분포를 스크롤로 따라가는 데이터 스토리.</p>
           <div class="work-tags"><span class="tag">D3.js</span><span class="tag">Canvas</span><span class="tag">Data Viz</span></div>
         </div>
         <div class="work-side">
@@ -143,12 +203,11 @@
           <span class="work-go" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M8 7h9v9"/></svg></span>
         </div>
       </a>
-      <!-- 05 -->
       <a class="work-row reveal" href="projects/flowfield/" data-preview="assets/img/covers/flowfield.svg">
         <span class="work-num">05</span>
         <div class="work-main">
           <span class="work-title">흐름 <span class="sub">Flowfield</span></span>
-          <p class="work-desc">마우스로 밀어내는 벡터장 위를 수만 개의 입자가 흐르는 제너러티브 캔버스. Perlin 노이즈와 프레임 예산 사이의 줄타기.</p>
+          <p class="work-desc">마우스로 밀어내는 벡터장 위를 수천 개의 입자가 흐르는 제너러티브 캔버스. Perlin 노이즈와 프레임 예산 사이의 줄타기.</p>
           <div class="work-tags"><span class="tag">Canvas</span><span class="tag">Perlin Noise</span><span class="tag">Generative</span></div>
         </div>
         <div class="work-side">
@@ -161,14 +220,6 @@
 
   <!-- floating preview (reused) -->
   <div class="work-preview" aria-hidden="true"><img alt="" src="assets/img/covers/type-playground.svg" width="400" height="300"></div>
-
-  <!-- ============ skills marquee ============ -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>TypeScript</span><span>React</span><span>Node.js</span><span>Python</span><span>PostgreSQL</span><span>WebSocket</span><span>Canvas</span><span>Docker</span><span>SVG</span><span>CSS</span>
-      <span>TypeScript</span><span>React</span><span>Node.js</span><span>Python</span><span>PostgreSQL</span><span>WebSocket</span><span>Canvas</span><span>Docker</span><span>SVG</span><span>CSS</span>
-    </div>
-  </div>
 
   <!-- ============ writing ============ -->
   <section class="section wrap" id="writing">
@@ -192,11 +243,6 @@
         <span class="post-title">정규식을 손으로 파싱하기</span>
         <span class="post-arrow" aria-hidden="true">→</span>
       </a>
-      <a class="post-row reveal" href="writing/variable-fonts-in-ui.html">
-        <span class="post-date">2025 · 02</span>
-        <span class="post-title">가변 폰트로 UI에 숨을 불어넣기</span>
-        <span class="post-arrow" aria-hidden="true">→</span>
-      </a>
     </div>
   </section>
 
@@ -204,30 +250,29 @@
   <section class="section wrap" id="about">
     <div class="section-head">
       <h2>소개<span class="accent">.</span></h2>
-      <span class="count">about</span>
+      <a class="u-link mono" href="about.html" style="font-size:var(--t--1)">이력 전체 →</a>
     </div>
     <div class="about">
       <p class="about-lead reveal">
-        저는 문제를 <span class="accent italic serif">끝까지</span> 들고 가는 걸 좋아합니다.
-        기획이 어설프면 기획을 고치고, 쿼리가 느리면 인덱스를 다시 깔고,
-        버튼이 어색하면 이징 곡선을 바꿉니다.
+        저는 문제를 <span class="accent italic serif">끝까지</span> 들고 갑니다.
+        증상(CPU 100%)을 원인으로 착각하지 않고, 임시 대응과 근본 해결을 구분해
+        진짜 원인까지 파고듭니다.
       </p>
       <div class="about-body reveal" style="--rd:100ms">
         <p>
-          커리어의 절반은 관리자 백오피스와 ERP처럼 "화면은 안 예뻐도 절대 틀리면 안 되는"
-          시스템을 만들며 보냈습니다. 나머지 절반은 스크래핑 파이프라인과 실시간 기능처럼
-          데이터가 흐르는 파이프를 붙잡고 있었고요. 그래서 저는 예쁜 것과 정확한 것을
-          굳이 나누지 않습니다.
+          커머스·주차 관제 같은 "틀리면 돈이 새는" 시스템의 장애를 마주하며 백엔드를 익혔고,
+          지금은 코드엣지에서 산업안전 시스템 <b>SafeIn</b>의 백엔드를 단독으로 설계·운영하고 있습니다.
+          최근엔 외국인 근로자용 다국어 번역 AI를 온프레미스 GPU에 직접 서빙했습니다.
         </p>
         <p>
-          여기 있는 프로젝트들은 회사 일과 별개로, 순전히 궁금해서 만든 것들입니다.
-          가변 폰트는 어떻게 렌더링될까, 정규식 파서는 얼마나 짧게 짤 수 있을까,
-          DB 없이 실시간 상태를 얼마나 버틸 수 있을까 — 그 질문의 답이 이 페이지들입니다.
+          비개발 직군과 오래 일해 온 덕분에 기술을 그들의 언어로 풀어 설명하는 데 익숙하고,
+          설계 결정은 ADR로 남깁니다. 아래 <a class="u-link" href="#work">실험</a>들은 회사 일과 별개로,
+          순전히 궁금해서 프레임워크 없이 만든 것들입니다.
         </p>
         <div class="stat-row">
-          <div class="stat"><b>5</b><span>years shipping</span></div>
-          <div class="stat"><b>∞</b><span>side projects</span></div>
-          <div class="stat"><b>KST</b><span>UTC+9 · Seoul</span></div>
+          <div class="stat"><b>7</b><span>실무 사례</span></div>
+          <div class="stat"><b>50%↓</b><span>업무 자동화 절감</span></div>
+          <div class="stat"><b>서울</b><span>KST · 원격 가능</span></div>
         </div>
       </div>
     </div>
@@ -235,18 +280,17 @@
 
 </main>
 
-<!-- ============ footer ============ -->
 <footer class="site-footer wrap">
   <div class="footer-cta">
-    <h2 class="reveal">같이 만들 게 있다면,<br><a href="mailto:asj2767@gmail.com">이야기해요 →</a></h2>
+    <h2 class="reveal">함께 만들 사람을 찾으신다면,<br><a href="mailto:lamgul@naver.com">이야기해요 →</a></h2>
     <div class="footer-links">
       <a class="u-link" href="https://github.com/lamgul" target="_blank" rel="noopener">GitHub</a>
-      <a class="u-link" href="mailto:asj2767@gmail.com">Email</a>
+      <a class="u-link" href="mailto:lamgul@naver.com">Email</a>
       <a class="u-link" href="about.html">이력 · CV</a>
     </div>
   </div>
   <div class="colophon">
-    <span>© <span data-year>2025</span> ann — 서울에서 손으로 짬. No framework, just HTML/CSS/JS.</span>
+    <span>© <span data-year>2025</span> 안성진 (ann) — 서울에서 손으로 짬. No framework, just HTML/CSS/JS.</span>
     <span>Set in <a href="https://fonts.google.com/specimen/Fraunces" target="_blank" rel="noopener">Fraunces</a> &amp; <a href="https://github.com/orioncactus/pretendard" target="_blank" rel="noopener">Pretendard</a>.</span>
   </div>
 </footer>
