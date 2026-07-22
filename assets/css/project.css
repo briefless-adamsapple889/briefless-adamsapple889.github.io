@@ -100,6 +100,7 @@
 
 /* code block */
 .code {
+  position: relative;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -112,6 +113,17 @@
   margin: var(--sp-4) 0 1.4em;
   tab-size: 2;
 }
+.code-copy {
+  position: absolute; top: 8px; right: 8px;
+  font-family: var(--sans); font-size: 0.68rem; padding: 0.32em 0.62em;
+  border-radius: 6px; border: 1px solid var(--line-2);
+  background: var(--bg-elev); color: var(--ink-3);
+  opacity: 0; transition: opacity .2s, color .2s, border-color .2s;
+}
+.code:hover .code-copy, .code-copy:focus-visible { opacity: 1; }
+.code-copy:hover { color: var(--accent); border-color: var(--accent); }
+.code-copy.ok { color: var(--teal); border-color: var(--teal); opacity: 1; }
+@media (hover: none) { .code-copy { opacity: 1; } }
 .code .c { color: var(--ink-3); font-style: italic; }
 .code .k { color: var(--accent); }
 .code .s { color: var(--teal); }

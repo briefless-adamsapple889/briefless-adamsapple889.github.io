@@ -276,3 +276,11 @@ p { text-wrap: pretty; }
   .reveal { opacity: 1; transform: none; }
 }
 html { scroll-behavior: smooth; }
+
+/* reading progress bar (article pages) */
+.read-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--teal));
+  z-index: 300; will-change: width;
+  transition: width 0.08s linear;
+}

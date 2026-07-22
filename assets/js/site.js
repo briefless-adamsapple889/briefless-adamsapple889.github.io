@@ -84,4 +84,39 @@
   document.querySelectorAll("[data-year]").forEach((el) => {
     el.textContent = String(new Date().getFullYear());
   });
+
+  // ---- reading progress bar (article pages) ----
+  if (document.querySelector(".post-body, .prose")) {
+    const bar = document.createElement("div");
+    bar.className = "read-progress";
+    bar.setAttribute("aria-hidden", "true");
+    document.body.appendChild(bar);
+    let ticking = false;
+    const update = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
+      ticking = false;
+    };
+    addEventListener("scroll", () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+    update();
+  }
+
+  // ---- copy buttons on code blocks ----
+  document.querySelectorAll("pre.code").forEach((block) => {
+    const text = block.innerText;
+    const btn = document.createElement("button");
+    btn.className = "code-copy";
+    btn.type = "button";
+    btn.textContent = "복사";
+    btn.setAttribute("aria-label", "코드 복사");
+    btn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = "복사됨 ✓"; btn.classList.add("ok");
+        setTimeout(() => { btn.textContent = "복사"; btn.classList.remove("ok"); }, 1400);
+      } catch (_) {}
+    });
+    block.appendChild(btn);
+  });
 })();
