@@ -102,6 +102,21 @@
     update();
   }
 
+  // ---- back to top (long article pages) ----
+  if (document.querySelector(".post-body, .prose")) {
+    const top = document.createElement("button");
+    top.className = "to-top";
+    top.type = "button";
+    top.setAttribute("aria-label", "맨 위로");
+    top.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+    top.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    document.body.appendChild(top);
+    let t2 = false;
+    addEventListener("scroll", () => {
+      if (!t2) { requestAnimationFrame(() => { top.classList.toggle("show", window.scrollY > 800); t2 = false; }); t2 = true; }
+    }, { passive: true });
+  }
+
   // ---- copy buttons on code blocks ----
   document.querySelectorAll("pre.code").forEach((block) => {
     const text = block.innerText;

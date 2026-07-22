@@ -284,3 +284,15 @@ html { scroll-behavior: smooth; }
   z-index: 300; will-change: width;
   transition: width 0.08s linear;
 }
+
+/* back-to-top button (long article pages) */
+.to-top {
+  position: fixed; right: clamp(1rem, 3vw, 2rem); bottom: clamp(1rem, 3vw, 2rem);
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--ink); color: var(--bg); box-shadow: var(--shadow-2);
+  opacity: 0; transform: translateY(10px); pointer-events: none; z-index: 90;
+  transition: opacity .3s var(--ease), transform .3s var(--ease), background .2s;
+}
+.to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { background: var(--accent); color: var(--on-accent); }
+@media print { .to-top, .read-progress { display: none !important; } }
