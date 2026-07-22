@@ -22,6 +22,10 @@
       const lbl = btn.querySelector("[data-theme-label]");
       if (lbl) lbl.textContent = theme === "dark" ? "Light" : "Dark";
     });
+    // keep embedded demos (iframes) in the same theme
+    document.querySelectorAll("iframe[data-theme-sync]").forEach((f) => {
+      try { f.contentWindow.postMessage({ type: "theme", value: theme }, "*"); } catch (_) {}
+    });
   }
 
   // toggle buttons
