@@ -1,0 +1,37 @@
+/* flow.css — generative canvas stage (fixed dark, it's a picture) */
+
+.flow-wrap { position: relative; }
+#flow-stage {
+  position: relative;
+  height: clamp(420px, 62vh, 660px);
+  background: #141210;
+  overflow: hidden;
+  touch-action: none;
+  cursor: crosshair;
+}
+#flow { position: absolute; inset: 0; display: block; }
+
+.flow-overlay {
+  position: absolute; inset: auto 0 0 0;
+  display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+  padding: 0.9rem 1rem;
+  background: linear-gradient(transparent, rgba(10,9,7,0.55));
+  pointer-events: none;
+}
+.flow-overlay > * { pointer-events: auto; }
+.flow-btn {
+  font-family: var(--mono); font-size: 0.74rem;
+  color: #ece7da; background: rgba(30,26,20,0.7);
+  border: 1px solid rgba(255,255,255,0.14); border-radius: 100px;
+  padding: 0.45em 0.9em; backdrop-filter: blur(6px);
+  transition: border-color .2s, background .2s;
+}
+.flow-btn:hover { border-color: var(--accent); background: rgba(219,67,34,0.22); }
+.flow-hint {
+  margin-left: auto; font-family: var(--mono); font-size: 0.72rem;
+  color: rgba(236,231,218,0.6);
+}
+.flow-hint b { color: var(--accent); font-weight: 600; }
+#flow-count { color: #ece7da; }
+
+@media (max-width: 520px) { .flow-hint { width: 100%; margin: 0.3rem 0 0; } }
