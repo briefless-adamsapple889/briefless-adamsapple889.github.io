@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>실무 사례 — 안성진</title>
+<meta name="description" content="백엔드 개발자 안성진이 실제 업무에서 해결한 문제들 — 메모리 누수, YOLO 차량감지, 정산 모듈화, DDD 크롤링, 전력예측 해커톤, 산업안전 시스템 설계.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="실무 사례 — 안성진">
+<meta property="og:description" content="증상·원인·접근·결과로 정리한 실제 문제 해결 기록.">
+<meta property="og:image" content="https://lamgul.github.io/assets/img/og.png">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/home.css">
+<link rel="stylesheet" href="../assets/css/writing.css">
+<link rel="stylesheet" href="../assets/css/case.css">
+<script>
+  (function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;else document.documentElement.removeAttribute("data-theme");}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#list">본문으로 건너뛰기</a>
+
+<header class="site-header" data-header>
+  <div class="wrap header-inner">
+    <a class="brand" href="../index.html" aria-label="안성진, 홈">ann<span class="dot">.</span></a>
+    <nav class="nav" aria-label="주요">
+      <a class="nav-hide" href="index.html" aria-current="page"><span class="num">01</span>사례</a>
+      <a class="nav-hide" href="../index.html#work"><span class="num">02</span>실험</a>
+      <a class="nav-hide" href="../writing/"><span class="num">03</span>글</a>
+      <a class="nav-hide" href="../about.html"><span class="num">04</span>소개</a>
+      <button class="icon-btn theme-toggle" data-theme-toggle aria-label="테마 전환">
+        <svg class="moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="case-intro wrap">
+    <p class="eyebrow">Case Studies</p>
+    <h1>실무에서 부딪히고<br>풀어낸 것들</h1>
+    <p>회사에서 실제로 마주한 장애와 요구를, 어떻게 진단하고 설계하고 해결했는지. 증상 → 원인 → 접근 → 결과 순으로 정리했습니다.</p>
+    <p class="disc">실제 업무 기록입니다. 회사 자산과 관련된 코드·데이터의 민감한 세부는 일반화했고, 수치는 당시 측정값입니다.</p>
+  </section>
+
+  <section class="wrap" id="list">
+    <div class="w-list">
+      <a class="w-item" href="safein.html">
+        <span class="w-date">2026 — 현재<br><span class="muted">코드엣지</span></span>
+        <div class="w-body">
+          <h2>SafeIn — 산업안전관리 시스템 설계</h2>
+          <p>상세 기획 없이 컨셉만 있던 상태에서, 산업안전 업무 흐름을 분석해 관리자 Web·근로자 App·백엔드 API를 단독으로 설계·구현. STT/다국어 번역 AI를 온프레미스 GPU에 vLLM으로 서빙.</p>
+          <span class="w-metric">핵심 도메인 8+ · 15개 언어 AI 번역 · GPU 추론 최적화</span>
+        </div>
+        <span class="w-tag">아키텍처 · AI 서빙</span>
+      </a>
+      <a class="w-item" href="memory-leak.html">
+        <span class="w-date">2022<br><span class="muted">대흥정보</span></span>
+        <div class="w-body">
+          <h2>7일마다 죽던 서버, 근본 원인까지</h2>
+          <p>1년간 방치된 주기적 장애. 힙메모리 증설로 급한 불을 끈 뒤에도 멈추지 않고, Scouter APM과 힙덤프 분석으로 멀티스레드 동기화 누락을 찾아 근본 해결.</p>
+          <span class="w-metric">장애주기 7일 <span style="font-style:italic">→</span> 30일 이상 · 트랜잭션 속도 30%↑</span>
+        </div>
+        <span class="w-tag">트러블슈팅</span>
+      </a>
+      <a class="w-item" href="vehicle-detection.html">
+        <span class="w-date">2023<br><span class="muted">대흥정보</span></span>
+        <div class="w-body">
+          <h2>루프 센서를 카메라로 — YOLO 차량감지</h2>
+          <p>매설형 루프 센서의 설치·유지보수 비용 문제를, 사전학습 YOLO로 우회. 데이터 수집 없이 2주 만에 실시간 30fps 프로토타입을 만들어 검증하고 사업화까지.</p>
+          <span class="w-metric">2주 MVP → 2023 신규 사업계획 반영</span>
+        </div>
+        <span class="w-tag">Vision AI · MVP</span>
+      </a>
+      <a class="w-item" href="power-forecast.html">
+        <span class="w-date">해커톤<br><span class="muted">AI 경진</span></span>
+        <div class="w-body">
+          <h2>전력사용량 예측 — 도메인 지식을 변수로</h2>
+          <p>원시 기상 데이터를 그대로 넣는 대신, 불쾌지수·체감온도 같은 파생 변수를 만들고 다중공선성을 정리. Feature Engineering이 성능을 얼마나 바꾸는지 체감한 프로젝트.</p>
+          <span class="w-metric">AI 부문 리더보드 10위</span>
+        </div>
+        <span class="w-tag">ML · Feature Engineering</span>
+      </a>
+      <a class="w-item" href="settlement-refactor.html">
+        <span class="w-date">2022<br><span class="muted">대흥정보</span></span>
+        <div class="w-body">
+          <h2>결제 수단마다 요금이 다른 버그</h2>
+          <p>같은 주차 시간인데 웹·키오스크·카카오페이 금액이 제각각. 5곳에 흩어진 정산 로직을 Template Method + Strategy 패턴으로 모듈화해 비즈니스 일관성을 회복.</p>
+          <span class="w-metric">정산 로직 5곳 → 1곳 · 코드 40%↓</span>
+        </div>
+        <span class="w-tag">디자인 패턴 · 리팩토링</span>
+      </a>
+      <a class="w-item" href="crawling-pipeline.html">
+        <span class="w-date">2023<br><span class="muted">팀 프로젝트</span></span>
+        <div class="w-body">
+          <h2>DDD 기반 크롤링 파이프라인</h2>
+          <p>사이트마다 다른 HTML 구조를, 새 사이트를 추가할 때 기존 코드를 건드리지 않는 구조로. Pipe &amp; Filter + Adapter 패턴, DDD, Exponential Backoff, Slack 알림.</p>
+          <span class="w-metric">신규 소스 추가 시 기존 코드 무수정</span>
+        </div>
+        <span class="w-tag">아키텍처 · DDD</span>
+      </a>
+      <a class="w-item" href="incident-process.html">
+        <span class="w-date">2022<br><span class="muted">대흥정보</span></span>
+        <div class="w-body">
+          <h2>쌓인 민원 200건을 30건으로</h2>
+          <p>인력은 그대로인데 매달 200건 넘게 쌓이던 민원. 3년치 백로그를 우선순위·리스크로 분류하고 JIRA로 이슈 관리를 체계화, 예방적 대응까지.</p>
+          <span class="w-metric">월 민원 200건+ → 30건 미만</span>
+        </div>
+        <span class="w-tag">프로세스 · 협업</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer wrap">
+  <div class="footer-cta">
+    <h2 class="reveal">함께 만들 사람을 찾으신다면,<br><a href="mailto:lamgul@naver.com">이야기해요 →</a></h2>
+    <div class="footer-links">
+      <a class="u-link" href="https://github.com/lamgul" target="_blank" rel="noopener">GitHub</a>
+      <a class="u-link" href="mailto:lamgul@naver.com">Email</a>
+      <a class="u-link" href="../about.html">이력 · CV</a>
+    </div>
+  </div>
+  <div class="colophon">
+    <span>© <span data-year>2025</span> 안성진 (ann)</span>
+    <span><a href="../index.html">홈으로</a></span>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

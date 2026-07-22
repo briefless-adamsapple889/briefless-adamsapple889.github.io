@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>루프 센서를 카메라로 — YOLO 차량감지 — 안성진</title>
+<meta name="description" content="매설형 루프 센서의 설치·유지보수 비용 문제를 사전학습 YOLO로 우회. 데이터 수집 없이 2주 만에 실시간 프로토타입을 만들어 사업화까지 이어간 기록.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="루프 센서를 카메라로 — YOLO 차량감지">
+<meta property="og:description" content="2주 MVP로 검증하고 사업계획에 반영시킨 이야기.">
+<meta property="og:image" content="https://lamgul.github.io/assets/img/og.png">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/project.css">
+<link rel="stylesheet" href="../assets/css/case.css">
+<script>
+  (function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;else document.documentElement.removeAttribute("data-theme");}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#body">본문으로 건너뛰기</a>
+
+<header class="proj-header" data-header>
+  <div class="wrap header-inner">
+    <a class="back-link" href="index.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      <span class="brand-mini">사례 목록</span>
+    </a>
+    <div class="spacer"></div>
+    <span class="crumb">cases / vehicle-detection</span>
+    <button class="icon-btn theme-toggle" data-theme-toggle aria-label="테마 전환" style="margin-left:var(--sp-3)">
+      <svg class="moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="proj-hero wrap">
+    <p class="eyebrow">사례 · 대흥정보 · 2023</p>
+    <h1>루프 센서를 카메라로<span class="sub">YOLO 기반 차량감지</span></h1>
+    <p class="tagline">주차 시스템은 도로에 매설한 루프 센서로 차를 감지했습니다. 설치비가 비싸고, 도로 공사가 필요하고, 고장 나면 수리가 어려웠죠. "카메라로 대신할 수 없을까?" 그 질문을 <b>2주짜리 프로토타입</b>으로 답했습니다.</p>
+    <div class="proj-meta">
+      <div><span class="m-key">역할</span><span class="m-val">AI 기능 제안 · 개발</span></div>
+      <div><span class="m-key">스택</span><span class="m-val">YOLOv5 · Python · GPU · 비동기</span></div>
+      <div><span class="m-key">유형</span><span class="m-val">Vision AI · MVP</span></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="metrics">
+      <div class="metric"><b>2주</b><span class="lab">프로토타입 완성</span><span class="sub">데이터 수집 없이</span></div>
+      <div class="metric"><b>30fps</b><span class="lab">실시간 처리</span><span class="sub">GPU 가속</span></div>
+      <div class="metric"><b>재사용</b><span class="lab">사전학습 '차량' 클래스</span><span class="sub">학습 0개월</span></div>
+      <div class="metric"><b>2023</b><span class="lab">신규 사업계획 반영</span><span class="sub">실제 사업화</span></div>
+    </div>
+  </section>
+
+  <article class="wrap section" id="body">
+    <div class="prose">
+      <p class="lead">가장 큰 난관은 기술이 아니라 <b>시간</b>이었습니다. 차량 데이터를 직접 수집하고 레이블링해 모델을 학습시키려면 최소 몇 개월. 하지만 저는 이 아이디어가 <em>될지 안 될지</em>를 빨리 검증하고 싶었습니다.</p>
+
+<span class="star">문제</span>
+<h2>비싼 센서, 그리고 더 비싼 검증 비용</h2>
+<p>루프 감지 방식(차량이 지날 때 매설 센서가 자기장 변화를 감지)은 설치 비용이 높고 도로 공사가 필요하며 고장 시 수리가 까다로웠습니다. 마침 컴퓨터 비전 기술이 실시간 객체 인식을 가능하게 만든 시점이었고, "카메라 한 대면 되지 않을까"라는 생각이 들었습니다. 문제는 이걸 증명하는 데 드는 시간이었습니다.</p>
+
+<span class="star">접근</span>
+<h2>학습하지 않는다 — 이미 아는 모델을 빌린다</h2>
+<p>YOLO(You Only Look Once)를 조사했습니다. 이미 수백만 장으로 학습돼 사람·차·동물 등 80개 클래스를 인식하는 모델이었고, 결정적으로 <b>'차량' 클래스가 이미 학습돼 있었습니다.</b> 그래서 모델을 새로 학습시키는 대신, 출력 중 차량으로 분류된 객체만 필터링하고 바운딩 박스의 위치·크기를 분석해 <b>주차 구역에 차가 있는지</b>를 판단하는 방식으로 접근했습니다.</p>
+<div class="callout"><span class="mark">*</span><p>MVP의 핵심은 "무엇을 만들 수 있나"가 아니라 "무엇을 검증해야 하나"입니다. 검증할 질문은 '카메라로 주차 점유를 판단할 수 있는가'였고, 그 답에 커스텀 학습은 필요 없었습니다. 몇 개월을 며칠로 줄인 건 기술이 아니라 <b>범위를 자른 판단</b>이었습니다.</p></div>
+
+<span class="star">엔지니어링</span>
+<h2>실시간, 그리고 여러 대의 카메라</h2>
+<p>주차장은 카메라가 여러 대입니다. YOLOv5로 초당 30프레임을 처리할 수 있었고, GPU를 쓰면 더 빨랐습니다. 여러 카메라에서 동시에 들어오는 영상을 감당하기 위해 <b>비동기 처리 구조</b>로 설계했습니다. 한 카메라의 추론이 다른 카메라를 막지 않도록.</p>
+
+<span class="star">결과</span>
+<h2>2주 뒤, 부사장 앞에서</h2>
+<p>2주 만에 프로토타입을 완성해 부사장님께 시연했습니다. "루프 센서보다 설치 비용이 저렴하고, 유지보수가 쉽습니다. 그리고 여기서 <b>차량 번호판 인식까지 확장</b>할 수 있습니다." 제안이 받아들여져 2023년 사업계획에 반영됐고, 신규 사업에 실제로 적용됐습니다. 주어진 업무만 하는 대신 "이건 어떻게 개선할 수 있을까"를 먼저 고민한 결과였습니다.</p>
+    </div>
+  </article>
+
+  <nav class="proj-nav wrap" aria-label="사례 이동">
+    <a class="prev" href="memory-leak.html"><div class="np-key">← 이전</div><div class="np-title">7일마다 죽던 서버</div></a>
+    <a class="next" href="power-forecast.html"><div class="np-key">다음 →</div><div class="np-title">전력사용량 예측</div></a>
+  </nav>
+</main>
+
+<footer class="site-footer wrap">
+  <div class="colophon"><span>© <span data-year>2025</span> 안성진</span><span><a href="../index.html">홈으로</a></span></div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

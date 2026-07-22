@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DDD 기반 크롤링 파이프라인 — 안성진</title>
+<meta name="description" content="사이트마다 다른 HTML 구조를, 새 사이트를 추가할 때 기존 코드를 건드리지 않는 구조로. Pipe & Filter + Adapter 패턴, DDD, Exponential Backoff로 설계한 확장 가능한 크롤링 파이프라인.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DDD 기반 크롤링 파이프라인">
+<meta property="og:description" content="새 사이트를 추가해도 기존 코드는 그대로.">
+<meta property="og:image" content="https://lamgul.github.io/assets/img/og.png">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/project.css">
+<link rel="stylesheet" href="../assets/css/case.css">
+<script>
+  (function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;else document.documentElement.removeAttribute("data-theme");}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#body">본문으로 건너뛰기</a>
+
+<header class="proj-header" data-header>
+  <div class="wrap header-inner">
+    <a class="back-link" href="index.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      <span class="brand-mini">사례 목록</span>
+    </a>
+    <div class="spacer"></div>
+    <span class="crumb">cases / crawling-pipeline</span>
+    <button class="icon-btn theme-toggle" data-theme-toggle aria-label="테마 전환" style="margin-left:var(--sp-3)">
+      <svg class="moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="proj-hero wrap">
+    <p class="eyebrow">사례 · 팀 프로젝트 · LLM 커뮤니티</p>
+    <h1>DDD 크롤링<span class="sub">파이프라인 설계</span></h1>
+    <p class="tagline">LLM 기반 패션 커뮤니티의 Admin(데이터 운영)을 맡아, 여러 패션 사이트에서 기사를 수집·전처리하는 시스템을 설계했습니다. 핵심 요구는 하나였습니다 — <b>새 사이트를 추가할 때 기존 코드를 건드리지 않을 것.</b></p>
+    <div class="proj-meta">
+      <div><span class="m-key">역할</span><span class="m-val">Admin · 데이터 파이프라인 설계</span></div>
+      <div><span class="m-key">스택</span><span class="m-val">Python · DDD · Pipe&Filter · Adapter</span></div>
+      <div><span class="m-key">유형</span><span class="m-val">아키텍처 · DDD</span></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="metrics">
+      <div class="metric"><b>무수정</b><span class="lab">신규 소스 추가</span><span class="sub">기존 코드 보존</span></div>
+      <div class="metric"><b>4단계</b><span class="lab">수집→정제→변환→저장</span><span class="sub">독립 필터</span></div>
+      <div class="metric"><b>Backoff</b><span class="lab">Rate Limit 대응</span><span class="sub">지수 백오프</span></div>
+      <div class="metric"><b>일 배치</b><span class="lab">자동 수집</span><span class="sub">스케줄러</span></div>
+    </div>
+  </section>
+
+  <article class="wrap section" id="body">
+    <div class="prose">
+      <p class="lead">사이트마다 HTML 구조가 다르고 크롤링 방식도 달라야 했습니다. 이걸 하나의 거대한 함수로 작성하면 유지보수는 불가능해집니다. 그래서 처음부터 <b>변화의 축을 격리하는</b> 구조를 고민했습니다.</p>
+
+<span class="star">구조 ①</span>
+<h2>흐름을 필터로 쪼갠다 — Pipe &amp; Filter</h2>
+<p>먼저 데이터 처리 흐름을 단계로 나눴습니다. <b>수집 → 정제 → 변환 → 저장.</b> 각 단계를 독립적인 필터로 구성하는 Pipe &amp; Filter 아키텍처를 적용했습니다. 각 필터는 입력을 받아 처리 후 다음 필터로 넘깁니다. 단계 간 결합이 사라지니 각 단계를 독립적으로 테스트할 수 있게 됐습니다.</p>
+
+<span class="star">구조 ②</span>
+<h2>사이트별 차이는 Adapter 뒤에 숨긴다</h2>
+<p>다음은 사이트별 크롤러를 어떻게 통합하느냐였습니다. Adapter 패턴으로 공통 인터페이스 <code>CrawlerInterface</code>를 정의하고, 사이트마다 Adapter를 구현했습니다. 새 사이트를 추가할 때는 기존 코드를 <b>단 한 줄도 건드리지 않고</b> 새 Adapter만 추가하면 됩니다. 개방-폐쇄 원칙(OCP)이 코드로 실현된 지점입니다.</p>
+
+<span class="star">구조 ③</span>
+<h2>도메인을 명시적으로 — DDD</h2>
+<p>DDD 관점에서 <code>Article</code>, <code>Category</code>, <code>Source</code> 같은 도메인 모델을 명시적으로 정의했습니다. 비즈니스 로직은 도메인 객체에 캡슐화하고, UseCase 계층에서 이를 조합해 비즈니스 흐름을 표현했습니다. 크롤링이라는 지저분해지기 쉬운 영역에, 읽히는 뼈대를 세운 셈입니다.</p>
+
+<span class="star">운영</span>
+<h2>현실은 언제나 지저분하다</h2>
+<p>실무적인 문제도 있었습니다. 웹사이트의 Rate Limiting과 봇 감지를 우회해야 했습니다. <b>Exponential Backoff</b> 전략으로 요청 간격을 조절했고, 장애가 발생하면 Slack으로 알림이 오도록 했습니다. 스케줄러로 매일 정해진 시간에 자동 수집하게 만들었습니다. 그리고 Clean Code 원칙 — 명시적 네이밍, 단일 책임, 의존성 역전 — 을 지켜 팀원들이 읽기 쉽게 구조화했습니다.</p>
+
+<span class="star">결과</span>
+<h2>확장이 두렵지 않은 파이프라인</h2>
+<p>결과적으로 확장 가능하고 유지보수가 쉬운 크롤링 파이프라인을 얻었습니다. 새 데이터 소스를 추가할 때도 최소한의 코드 추가만으로 가능했습니다. "새 요구가 올 때마다 기존 코드를 고쳐야 하는" 구조와, "새 요구를 <em>덧붙이기만</em> 하면 되는" 구조의 차이 — 그 차이가 곧 시스템의 수명이라고 생각합니다.</p>
+    </div>
+  </article>
+
+  <nav class="proj-nav wrap" aria-label="사례 이동">
+    <a class="prev" href="settlement-refactor.html"><div class="np-key">← 이전</div><div class="np-title">정산 시스템 모듈화</div></a>
+    <a class="next" href="incident-process.html"><div class="np-key">다음 →</div><div class="np-title">민원 200건을 30건으로</div></a>
+  </nav>
+</main>
+
+<footer class="site-footer wrap">
+  <div class="colophon"><span>© <span data-year>2025</span> 안성진</span><span><a href="../index.html">홈으로</a></span></div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

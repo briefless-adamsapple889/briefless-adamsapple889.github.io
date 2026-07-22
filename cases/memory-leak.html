@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7일마다 죽던 서버 — 안성진</title>
+<meta name="description" content="1년간 방치된 주기적 서버 다운. 힙메모리 증설로 급한 불을 끈 뒤에도 멈추지 않고, Scouter APM과 힙덤프 분석으로 멀티스레드 동기화 누락을 찾아 근본 해결한 트러블슈팅 기록.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7일마다 죽던 서버, 근본 원인까지">
+<meta property="og:description" content="힙덤프 분석으로 찾은 synchronized 누락.">
+<meta property="og:image" content="https://lamgul.github.io/assets/img/og.png">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/project.css">
+<link rel="stylesheet" href="../assets/css/case.css">
+<script>
+  (function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;else document.documentElement.removeAttribute("data-theme");}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#body">본문으로 건너뛰기</a>
+
+<header class="proj-header" data-header>
+  <div class="wrap header-inner">
+    <a class="back-link" href="index.html">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      <span class="brand-mini">사례 목록</span>
+    </a>
+    <div class="spacer"></div>
+    <span class="crumb">cases / memory-leak</span>
+    <button class="icon-btn theme-toggle" data-theme-toggle aria-label="테마 전환" style="margin-left:var(--sp-3)">
+      <svg class="moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="proj-hero wrap">
+    <p class="eyebrow">사례 · 대흥정보 · 2022</p>
+    <h1>7일마다 죽던 서버<span class="sub">근본 원인까지</span></h1>
+    <p class="tagline">입사 1주차에 들은 이야기 — "이 서비스는 7~9일마다 다운되는데, 벌써 1년째입니다." 급한 불을 끄는 것과 <b>다시는 안 나게 만드는 것</b>은 다른 일이었습니다. 저는 후자까지 가고 싶었습니다.</p>
+    <div class="proj-meta">
+      <div><span class="m-key">역할</span><span class="m-val">SM · 장애 분석 및 해결</span></div>
+      <div><span class="m-key">도구</span><span class="m-val">Scouter APM · Heap Dump · JVM</span></div>
+      <div><span class="m-key">유형</span><span class="m-val">트러블슈팅 · 성능</span></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="metrics">
+      <div class="metric"><b>7일<span class="to">→</span>30일+</b><span class="lab">장애 주기</span><span class="sub">사실상 재발 없음</span></div>
+      <div class="metric"><b>+30%</b><span class="lab">트랜잭션 속도</span><span class="sub">GC 부담 해소</span></div>
+      <div class="metric"><b>80%+</b><span class="lab">한 클래스가 점유</span><span class="sub">힙덤프에서 발견</span></div>
+      <div class="metric"><b>1년<span class="to">→</span>해결</b><span class="lab">방치된 문제</span><span class="sub">근본 원인 제거</span></div>
+    </div>
+  </section>
+
+  <article class="wrap section" id="body">
+    <div class="prose">
+      <p class="lead">'왜 이런 일이 1년이나 방치됐을까'라는 의문이 들었지만, 어쨌든 해결이 먼저였습니다. 흥미로운 건 이 문제가 <b>여러 겹의 오해</b>로 덮여 있었다는 점입니다. 하나씩 벗겨야 했습니다.</p>
+
+      <span class="star">가설 ①</span>
+      <h2>하드웨어 병목? — 아니었다</h2>
+      <p>장애 시점에 CPU와 메모리 사용률이 100%에 도달하는 걸 확인했습니다. 자연스럽게 하드웨어 병목을 의심했습니다. 그런데 서버 사양은 충분히 넉넉했고, DB 성능도 정상이었습니다. 물리적 자원이 부족한 게 아니라면, <b>자원을 낭비하는 무언가</b>가 있다는 뜻이었습니다.</p>
+
+      <span class="star">단서</span>
+      <h2>넉넉한 메모리, 그런데 쌓이는 스왑</h2>
+      <p>물리 서버의 캐시 정보를 뒤지다 이상한 걸 봤습니다. PC 메모리는 넉넉한데 <b>스왑 메모리가 계속 쌓이고</b> 있었습니다. 메모리가 남는데 왜 디스크로 밀어내지? 여기서 문제가 애플리케이션 레이어, 특히 JVM 안에 있다는 감이 왔습니다.</p>
+
+      <span class="star">진단</span>
+      <h2>Scouter APM이 그림을 완성했다</h2>
+      <p>Scouter APM으로 트랜잭션 동작을 추적하자 퍼즐이 맞춰졌습니다. <b>DB에서 가져온 데이터를 자바 객체로 변환하는 과정에서 지연</b>이 발생했고, 힙메모리가 부족해지자 <b>빈번한 Full GC</b>가 일어나면서 CPU를 100%로 밀어올리고 있었습니다. 100%는 원인이 아니라 <em>증상</em>이었던 겁니다.</p>
+
+      <span class="star">임시 조치</span>
+      <h2>먼저 급한 불부터, 정직하게 '임시'라고 부르며</h2>
+      <p>당장 운영을 안정시키기 위해 힙메모리를 8GB에서 16GB로 증설하고, 클라이언트와 협의해 정기 재기동을 도입했습니다. 트래픽이 몰리는 시간에도 시스템이 쾌적해졌습니다. 하지만 저는 이걸 <b>임시방편</b>이라고 분명히 못 박아 두었습니다. 메모리를 늘리고 주기적으로 껐다 켜는 건, 누수를 <em>늦추는</em> 것이지 <em>없애는</em> 게 아니니까요.</p>
+
+      <span class="star">근본 해결</span>
+      <h2>퇴근 후 힙덤프를 배웠다</h2>
+      <p>솔직히 그 시점의 저는 힙덤프를 제대로 분석할 능력이 부족했습니다. 마침 재직자 대상 트러블슈팅 교육이 있어 퇴근 후 녹화본으로 공부했습니다. 배운 대로 힙덤프를 떠서 분석하니, <b>특정 클래스 하나가 힙의 80% 이상</b>을 붙들고 있었습니다. 코드를 따라가 보니 원인은 명확했습니다 — 멀티스레드 환경에서 객체를 참조하는 과정에 <b>동기화 처리가 빠져</b> 있었습니다.</p>
+      <pre class="code"><span class="c">// 여러 스레드가 동시에 접근하며 객체가 회수되지 못하고 쌓였다</span>
+<span class="k">public</span> <span class="k">void</span> <span class="f">register</span>(Key k, Session s) {
+  cache.put(k, s);          <span class="c">// 동기화 없음 → 상태가 어긋나며 참조가 남음</span>
+}
+<span class="c">// 스레드 안전성을 확보하자 누수가 멈췄다</span>
+<span class="k">public</span> <span class="k">synchronized</span> <span class="k">void</span> <span class="f">register</span>(Key k, Session s) {
+  cache.put(k, s);
+}</pre>
+      <p><code>synchronized</code>로 스레드 안전성을 확보하자, 1년을 끌어온 메모리 누수가 사라졌습니다. 장애 주기는 7일에서 30일 이상으로 늘었고 — 사실상 재발하지 않았고 — Full GC 부담이 사라지며 트랜잭션 속도도 약 30% 개선됐습니다.</p>
+
+      <div class="callout"><span class="mark">*</span><p>제가 이 사례를 아끼는 이유는 화려한 기술 때문이 아닙니다. <b>증상(CPU 100%)을 원인으로 착각하지 않고, 임시 대응과 근본 해결을 구분해 끝까지 간 것.</b> 그리고 능력이 부족하면 퇴근 후에라도 배워서 채운 것. 이게 제가 문제를 대하는 방식입니다.</p></div>
+
+      <p>이 경험은 지금도 습관으로 남아 있습니다. 막히면 코드를 노려보기 전에 "내가 지금 뭘 사실이라고 <em>가정</em>하고 있지?"부터 적어봅니다. 그때 CPU 100%를 원인이라 가정했다면, 저는 아직도 서버를 껐다 켜고 있었을 겁니다.</p>
+    </div>
+  </article>
+
+  <nav class="proj-nav wrap" aria-label="사례 이동">
+    <a class="prev" href="safein.html"><div class="np-key">← 이전</div><div class="np-title">SafeIn 시스템</div></a>
+    <a class="next" href="vehicle-detection.html"><div class="np-key">다음 →</div><div class="np-title">YOLO 차량감지</div></a>
+  </nav>
+</main>
+
+<footer class="site-footer wrap">
+  <div class="colophon"><span>© <span data-year>2025</span> 안성진</span><span><a href="../index.html">홈으로</a></span></div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>
