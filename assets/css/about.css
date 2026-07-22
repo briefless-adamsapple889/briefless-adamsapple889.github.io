@@ -1,0 +1,113 @@
+/* about.css — about / cv page (reuses base + home for header/footer/section) */
+
+.about-hero { padding-block: clamp(3rem, 2rem + 6vw, 6.5rem) var(--sp-5); }
+.about-hero h1 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: var(--t-4);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  max-width: 20ch;
+}
+.about-hero h1 .em { font-style: italic; color: var(--accent); }
+.about-hero .lead {
+  margin-top: var(--sp-5);
+  max-width: 60ch;
+  font-size: var(--t-1);
+  color: var(--ink-2);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) 1fr;
+  gap: var(--sp-6);
+}
+@media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; gap: var(--sp-4); } }
+.grid-2 .side-label {
+  font-family: var(--mono);
+  font-size: var(--t--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  position: sticky;
+  top: 90px;
+  align-self: start;
+}
+@media (max-width: 760px) { .grid-2 .side-label { position: static; } }
+
+/* skills */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--sp-5);
+}
+.skill-col h3 {
+  font-family: var(--serif);
+  font-weight: 420;
+  font-size: var(--t-1);
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+.skill-col li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.42rem 0;
+  color: var(--ink-2);
+  font-size: var(--t-0);
+}
+.skill-col li .lvl {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.skill-col li b { color: var(--ink); font-weight: 500; }
+
+/* dot meter */
+.dots { display: inline-flex; gap: 3px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line-2); display: inline-block; }
+.dots i.on { background: var(--accent); }
+
+/* experience timeline */
+.timeline { border-left: 1.5px solid var(--line); margin-left: 6px; }
+.job { position: relative; padding: 0 0 var(--sp-6) var(--sp-5); }
+.job:last-child { padding-bottom: 0; }
+.job::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--sp-5) * -1 - 6px);
+  top: 6px;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2.5px solid var(--accent);
+}
+.job .when { font-family: var(--mono); font-size: var(--t--1); color: var(--ink-3); }
+.job h3 { font-size: var(--t-1); font-weight: 600; margin-top: 0.25rem; }
+.job .role { color: var(--accent); font-weight: 500; }
+.job .place { color: var(--ink-2); }
+.job ul { margin-top: 0.7rem; display: grid; gap: 0.4rem; }
+.job ul li {
+  position: relative;
+  padding-left: 1.1rem;
+  color: var(--ink-2);
+  font-size: var(--t-0);
+}
+.job ul li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+.job .stack { margin-top: 0.8rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+/* principles */
+.principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--sp-5); }
+.principle { }
+.principle .n { font-family: var(--mono); color: var(--accent); font-size: var(--t--1); }
+.principle h3 { font-family: var(--serif); font-weight: 420; font-size: var(--t-2); margin: 0.4rem 0 0.5rem; letter-spacing: -0.01em; }
+.principle p { color: var(--ink-2); font-size: var(--t-0); }
+
+/* now list */
+.now-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--line); color: var(--ink-2); display: flex; gap: 0.8rem; }
+.now-list li:last-child { border-bottom: 0; }
+.now-list li span:first-child { color: var(--accent); font-family: var(--mono); font-size: var(--t--1); min-width: 5.5em; }
